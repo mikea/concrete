@@ -81,4 +81,15 @@ public class Stack<T> implements Iterable<T> {
       }
     };
   }
+
+  /**
+   * Reverses the stack. O(N).
+   */
+  public Stack<T> reverse() {
+    Stack<T> result = new Stack<T>();
+    for (T t : this) {
+      result = result.push(t);
+    }
+    return result;
+  }
 }

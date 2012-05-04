@@ -103,4 +103,16 @@ public class StackTest extends TestCase {
       // expected
     }
   }
+
+  public void testReverse() throws Exception {
+    Stack<String> stack = new Stack<String>();
+    stack = stack.push("a");
+    stack = stack.push("b");
+    stack = stack.push("c");
+    stack = stack.push("d");
+    stack = stack.push("e");
+
+    assertEquals("[e, d, c, b, a]", Iterables.toString(stack));
+    assertEquals("[a, b, c, d, e]", Iterables.toString(stack.reverse()));
+  }
 }
