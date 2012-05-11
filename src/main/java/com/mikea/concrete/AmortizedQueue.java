@@ -3,16 +3,16 @@ package com.mikea.concrete;
 import java.util.NoSuchElementException;
 
 public class AmortizedQueue<T> implements CQueue<T, AmortizedQueue<T>> {
-  private final Stack<T> front;
-  private final Stack<T> rear;
+  private final Stack<T> head;
+  private final Stack<T> tail;
 
-  private AmortizedQueue(Stack<T> front, Stack<T> rear) {
-    if (front.isEmpty() && !rear.isEmpty()) {
-      this.front = rear.reverse();
-      this.rear = new Stack<T>();
+  private AmortizedQueue(Stack<T> head, Stack<T> tail) {
+    if (head.isEmpty() && !tail.isEmpty()) {
+      this.head = tail.reverse();
+      this.tail = new Stack<T>();
     } else {
-      this.front = front;
-      this.rear = rear;
+      this.head = head;
+      this.tail = tail;
     }
   }
 
@@ -22,7 +22,12 @@ public class AmortizedQueue<T> implements CQueue<T, AmortizedQueue<T>> {
 
   @Override
   public boolean isEmpty() {
-    return front.isEmpty();
+    return head.isEmpty();
+  }
+
+  @Override
+  public int size() {
+    return head.size() + tail.size();
   }
 
   /**
@@ -30,7 +35,7 @@ public class AmortizedQueue<T> implements CQueue<T, AmortizedQueue<T>> {
    */
   @Override
   public AmortizedQueue<T> push(T t) {
-    return new AmortizedQueue<T>(front, rear.push(t));
+    return new AmortizedQueue<T>(head, tail.push(t));
   }
 
   /**
@@ -41,7 +46,7 @@ public class AmortizedQueue<T> implements CQueue<T, AmortizedQueue<T>> {
     if (isEmpty()) {
       throw new NoSuchElementException();
     }
-    return new AmortizedQueue<T>(front.pop(), rear);
+    return new AmortizedQueue<T>(head.pop(), tail);
   }
 
   /**
@@ -52,6 +57,6 @@ public class AmortizedQueue<T> implements CQueue<T, AmortizedQueue<T>> {
     if (isEmpty()) {
       return null;
     }
-    return front.peek();
+    return head.peek();
   }
 }

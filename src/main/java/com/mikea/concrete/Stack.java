@@ -7,37 +7,39 @@ import java.util.NoSuchElementException;
  * Stack storage. Consumes O(N) space.
  */
 public class Stack<T> implements CCollection<T, Stack<T>>, Iterable<T> {
-  // Null object to be used as terminator.
-  private static Stack NULL_STACK = new Stack<Object>(null, null);
-
   private final T value;
   private final Stack<T> next;
+  private final int size;
 
-  private Stack(T value, Stack<T> next) {
+  private Stack(T value, Stack<T> next, int size) {
     this.value = value;
     this.next = next;
+    this.size = size;
   }
 
   /**
    * Creates an empty stack.
    */
-  @SuppressWarnings("unchecked")
   public Stack() {
-    this(null, NULL_STACK);
+    this(null, null, 0);
   }
 
   /**
    * Checks if the stack is empty. O(1).
    */
   @Override
-  public boolean isEmpty() { return next == NULL_STACK; }
+  public boolean isEmpty() { return size == 0; }
 
+  @Override
+  public int size() {
+    return size;
+  }
 
   /**
    * Pushes new value on the top of the stack. O(1).
    */
   public Stack<T> push(T value) {
-    return new Stack<T>(value, this);
+    return new Stack<T>(value, this, size + 1);
   }
 
   /**
@@ -45,7 +47,7 @@ public class Stack<T> implements CCollection<T, Stack<T>>, Iterable<T> {
    */
   public T peek() {
     if (isEmpty()) {
-      throw new NoSuchElementException("Empty stack");
+      return null;
     }
     return value;
   }
@@ -67,7 +69,7 @@ public class Stack<T> implements CCollection<T, Stack<T>>, Iterable<T> {
 
       @Override
       public boolean hasNext() {
-        return pointer.next != NULL_STACK;
+        return pointer.size != 0;
       }
 
       @Override
@@ -96,5 +98,19 @@ public class Stack<T> implements CCollection<T, Stack<T>>, Iterable<T> {
       result = result.push(t);
     }
     return result;
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder result = new StringBuilder();
+    for (T t : this) {
+      if (result.length() != 0) {
+        result.append(", ");
+      }
+      result.append(t.toString());
+    }
+    result.insert(0, "[");
+    result.append("]");
+    return result.toString();
   }
 }

@@ -14,12 +14,15 @@ public class StackTest extends TestCase {
     assertTrue(stack.isEmpty());
     assertEquals("[]", Iterables.toString(stack));
 
+    assertNull(stack.peek());
+/*
     try {
       stack.peek();
       fail();
     } catch (NoSuchElementException e) {
       // expected;
     }
+*/
 
     try {
       stack.pop();
