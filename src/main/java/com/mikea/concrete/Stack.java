@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 /**
  * Stack storage. Consumes O(N) space.
  */
-public class Stack<T> implements CCollection<T, Stack<T>>, Iterable<T> {
+public class Stack<T> implements CStack<T, Stack<T>>, Iterable<T> {
   private final T value;
   private final Stack<T> next;
   private final int size;
@@ -38,6 +38,7 @@ public class Stack<T> implements CCollection<T, Stack<T>>, Iterable<T> {
   /**
    * Pushes new value on the top of the stack. O(1).
    */
+  @Override
   public Stack<T> push(T value) {
     return new Stack<T>(value, this, size + 1);
   }
@@ -45,6 +46,7 @@ public class Stack<T> implements CCollection<T, Stack<T>>, Iterable<T> {
   /**
    * Gets value from the top of the stack. O(1).
    */
+  @Override
   public T peek() {
     if (isEmpty()) {
       return null;
@@ -55,6 +57,7 @@ public class Stack<T> implements CCollection<T, Stack<T>>, Iterable<T> {
   /**
    * Pops(removes) value from the top of the stack. O(1).
    */
+  @Override
   public Stack<T> pop() {
     if (isEmpty()) {
       throw new NoSuchElementException("Empty stack");
@@ -92,6 +95,7 @@ public class Stack<T> implements CCollection<T, Stack<T>>, Iterable<T> {
   /**
    * Reverses the stack. O(N).
    */
+  @Override
   public Stack<T> reverse() {
     Stack<T> result = new Stack<T>();
     for (T t : this) {
