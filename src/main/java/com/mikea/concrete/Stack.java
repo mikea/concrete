@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 /**
  * Stack storage. Consumes O(N) space.
  */
-public class Stack<T> implements Iterable<T> {
+public class Stack<T> implements CCollection<T, Stack<T>>, Iterable<T> {
   // Null object to be used as terminator.
   private static Stack NULL_STACK = new Stack<Object>(null, null);
 

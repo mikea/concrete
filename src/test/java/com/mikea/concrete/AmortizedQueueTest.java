@@ -1,19 +1,16 @@
 package com.mikea.concrete;
 
-import junit.framework.TestCase;
-
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
-import java.util.Random;
 
-public class QueueTest extends TestCase {
+public class AmortizedQueueTest extends QueueTestCase {
   public void testEmptyQueue() throws Exception {
-    Queue<String> queue = new Queue<String>();
+    AmortizedQueue<String> queue = new AmortizedQueue<String>();
     assertTrue(queue.isEmpty());
   }
 
   public void testPush() throws Exception {
-    Queue<String> queue = new Queue<String>();
+    AmortizedQueue<String> queue = new AmortizedQueue<String>();
     queue = queue.push("a");
     assertFalse(queue.isEmpty());
     queue = queue.push("b");
@@ -27,7 +24,7 @@ public class QueueTest extends TestCase {
   }
 
   public void testPushPopPeek() throws Exception {
-    Queue<String> queue = new Queue<String>();
+    AmortizedQueue<String> queue = new AmortizedQueue<String>();
 
     queue = queue.push("a");
     assertFalse(queue.isEmpty());
@@ -87,39 +84,8 @@ public class QueueTest extends TestCase {
   }
 
   public void testRandomizedTest() throws Exception {
-    Queue<String> queue1 = new Queue<String>();
+    AmortizedQueue<String> queue1 = new AmortizedQueue<String>();
     java.util.Queue<String> queue2 = new LinkedList<String>();
-    Random random = new Random();
-
-    for (int iteration = 0; iteration < 10000; ++iteration) {
-      switch (random.nextInt(2)) {
-        case 0: {
-          queue1 = queue1.push(String.valueOf(iteration));
-          queue2.add(String.valueOf(iteration));
-          break;
-        }
-        case 1: {
-          boolean noSuchElementException1 = false;
-          boolean noSuchElementException2 = false;
-
-          try {
-            queue1 = queue1.pop();
-          } catch (NoSuchElementException e) {
-            noSuchElementException1 = true;
-          }
-          try {
-            queue2.remove();
-          } catch (NoSuchElementException e) {
-            noSuchElementException2 = true;
-          }
-
-          assertEquals(noSuchElementException1, noSuchElementException2);
-          break;
-        }
-      }
-
-      assertEquals(queue2.peek(), queue1.peek());
-      assertEquals(queue2.isEmpty(), queue1.isEmpty());
-    }
+    compareQueues(queue1, queue2);
   }
 }
