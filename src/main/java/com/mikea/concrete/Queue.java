@@ -34,7 +34,7 @@ public class Queue<T> {
   /**
    * Pop element from the head of the queue. O(1).
    */
-  public Queue<T> pop() {
+  public Queue<T> pop() throws NoSuchElementException {
     if (isEmpty()) {
       throw new NoSuchElementException();
     }
@@ -42,11 +42,11 @@ public class Queue<T> {
   }
 
   /**
-   * Peek at the head element. O(1).
+   * Peek at the head element. Null if empty. O(1).
    */
   public T peek() {
     if (isEmpty()) {
-      throw new NoSuchElementException();
+      return null;
     }
     return front.peek();
   }
