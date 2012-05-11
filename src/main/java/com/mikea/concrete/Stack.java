@@ -29,6 +29,7 @@ public class Stack<T> implements CCollection<T, Stack<T>>, Iterable<T> {
   /**
    * Checks if the stack is empty. O(1).
    */
+  @Override
   public boolean isEmpty() { return next == NULL_STACK; }
 
 
@@ -59,14 +60,17 @@ public class Stack<T> implements CCollection<T, Stack<T>>, Iterable<T> {
     return next;
   }
 
+  @Override
   public Iterator<T> iterator() {
     return new Iterator<T>() {
       Stack<T> pointer = Stack.this;
 
+      @Override
       public boolean hasNext() {
         return pointer.next != NULL_STACK;
       }
 
+      @Override
       public T next() {
         if (!hasNext()) {
           throw new NoSuchElementException();
@@ -76,6 +80,7 @@ public class Stack<T> implements CCollection<T, Stack<T>>, Iterable<T> {
         return value;
       }
 
+      @Override
       public void remove() {
         throw new UnsupportedOperationException("remove is not implemented in ");
       }
