@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Queue;
 import java.util.Random;
 
-public abstract class QueueTestCase<Q extends CQueue<String, Q>> extends TestCase {
+public abstract class QueueTestCase<Q extends PQueue<String, Q>> extends TestCase {
 
   protected abstract Q createQueue();
 

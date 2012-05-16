@@ -2,7 +2,7 @@ package com.mikea.concrete;
 
 import java.util.NoSuchElementException;
 
-public class AmortizedQueue<T> implements CQueue<T, AmortizedQueue<T>> {
+public class AmortizedQueue<T> implements PQueue<T, AmortizedQueue<T>> {
   private final Stack<T> head;
   private final Stack<T> tail;
 

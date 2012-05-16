@@ -1,7 +1,7 @@
 Concrete
 ========
 
-Purely functional data structures in Java.
+Fully persistent data structures in Java.
 
 
 Stack
@@ -17,7 +17,7 @@ Stack
 Queue
 ======
 
-    Queue<String> queue = new Queue<String>();
+    RealtimeQueue<String> queue = new RealtimeQueue<String>();
     queue = queue.push("a");
     queue = queue.push("b");
     assertEquals("a", queue.peek());

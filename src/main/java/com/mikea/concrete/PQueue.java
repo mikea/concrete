@@ -1,6 +1,6 @@
 package com.mikea.concrete;
 
-public interface CQueue<T, Self extends CQueue> extends CCollection<T, Self> {
+public interface PQueue<T, Self extends PQueue> extends PCollection<T, Self> {
   Self push(T value);
   Self pop();
 

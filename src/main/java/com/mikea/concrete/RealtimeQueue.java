@@ -4,7 +4,7 @@ package com.mikea.concrete;
  * Real-time queue operation as described in "Real Time Queue Operations in Pure LISP" by
  * Hood, Robert T. & Melville, Robert C.
  */
-public class RealtimeQueue<T> implements CQueue<T, RealtimeQueue<T>> {
+public class RealtimeQueue<T> implements PQueue<T, RealtimeQueue<T>> {
   private final Stack<T> head;
   private final Stack<T> tail;
 

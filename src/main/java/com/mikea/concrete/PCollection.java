@@ -1,7 +1,7 @@
 package com.mikea.concrete;
 
 @SuppressWarnings("UnusedDeclaration")
-public interface CCollection<T, Self extends CCollection> {
+public interface PCollection<T, Self extends PCollection> {
   boolean isEmpty();
   int size();
 }

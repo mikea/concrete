@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 /**
  * Stack storage. Consumes O(N) space.
  */
-public class Stack<T> implements CStack<T, Stack<T>>, Iterable<T> {
+public class Stack<T> implements PStack<T, Stack<T>>, Iterable<T> {
   private final T value;
   private final Stack<T> next;
   private final int size;
