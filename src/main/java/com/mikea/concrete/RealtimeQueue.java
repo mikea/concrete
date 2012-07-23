@@ -1,5 +1,7 @@
 package com.mikea.concrete;
 
+import static com.mikea.concrete.Stack.newStack;
+
 /**
  * Real-time queue operation as described in "Real Time Queue Operations in Pure LISP" by
  * Hood, Robert T. & Melville, Robert C.
@@ -20,19 +22,19 @@ public class RealtimeQueue<T> implements PQueue<T, RealtimeQueue<T>> {
       assertEmptyReverseStacks(headReverseFrom, headReverseTo, tailReverseFrom, tailReverseTo);
       if (tail.size() == 1) {
         this.head = tail;
-        this.tail = new Stack<T>();
+        this.tail = newStack();
         this.tailReverseFrom = null;
         this.tailReverseTo = null;
         this.headReverseFrom = null;
         this.headReverseTo = null;
       } else {
         this.head = head;
-        this.tail = new Stack<T>();
+        this.tail = newStack();
 
         this.tailReverseFrom = tail;
-        this.tailReverseTo = new Stack<T>();
+        this.tailReverseTo = newStack();
         this.headReverseFrom = head;
-        this.headReverseTo = new Stack<T>();
+        this.headReverseTo = newStack();
       }
     } else {
       this.head = head;
@@ -48,23 +50,23 @@ public class RealtimeQueue<T> implements PQueue<T, RealtimeQueue<T>> {
   }
 
   public RealtimeQueue() {
-    this(new Stack<T>(), new Stack<T>(), null, null, null, null, 0);
+    this(Stack.<T>newStack(), Stack.<T>newStack(), null, null, null, null, 0);
   }
 
   @Override
-  public RealtimeQueue<T> pushFront(T value) {
-    return newQueue(head, tail.push(value), tailReverseFrom, tailReverseTo, headReverseFrom,
+  public RealtimeQueue<T> pushBack(T value) {
+    return newQueue(head, tail.pushFront(value), tailReverseFrom, tailReverseTo, headReverseFrom,
         headReverseTo, headCopied);
   }
 
   @Override
   public RealtimeQueue<T> popFront() {
-    return newQueue(head.pop(), tail, tailReverseFrom, tailReverseTo, headReverseFrom, headReverseTo, headCopied);
+    return newQueue(head.popFront(), tail, tailReverseFrom, tailReverseTo, headReverseFrom, headReverseTo, headCopied);
   }
 
   @Override
   public T peekFront() {
-    return head.peek();
+    return head.peekFront();
   }
 
   private static <T> RealtimeQueue<T> newQueue(Stack<T> head, Stack<T> tail,
@@ -96,28 +98,28 @@ public class RealtimeQueue<T> implements PQueue<T, RealtimeQueue<T>> {
     }
     
     if (!tailReverseFrom.isEmpty()) {
-      tailReverseTo = tailReverseTo.push(tailReverseFrom.peek());
-      tailReverseFrom = tailReverseFrom.pop();
+      tailReverseTo = tailReverseTo.pushFront(tailReverseFrom.peekFront());
+      tailReverseFrom = tailReverseFrom.popFront();
     }
     if (!tailReverseFrom.isEmpty()) {
-      tailReverseTo = tailReverseTo.push(tailReverseFrom.peek());
-      tailReverseFrom = tailReverseFrom.pop();
+      tailReverseTo = tailReverseTo.pushFront(tailReverseFrom.peekFront());
+      tailReverseFrom = tailReverseFrom.popFront();
     }
 
     if (!headReverseFrom.isEmpty()) {
-      headReverseTo = headReverseTo.push(headReverseFrom.peek());
-      headReverseFrom = headReverseFrom.pop();
+      headReverseTo = headReverseTo.pushFront(headReverseFrom.peekFront());
+      headReverseFrom = headReverseFrom.popFront();
     }
     if (!headReverseFrom.isEmpty()) {
-      headReverseTo = headReverseTo.push(headReverseFrom.peek());
-      headReverseFrom = headReverseFrom.pop();
+      headReverseTo = headReverseTo.pushFront(headReverseFrom.peekFront());
+      headReverseFrom = headReverseFrom.popFront();
     }
 
     if (tailReverseFrom.isEmpty()) {
       if (!headReverseTo.isEmpty() && headCopied < head.size()) {
         headCopied++;
-        tailReverseTo = tailReverseTo.push(headReverseTo.peek());
-        headReverseTo = headReverseTo.pop();
+        tailReverseTo = tailReverseTo.pushFront(headReverseTo.peekFront());
+        headReverseTo = headReverseTo.popFront();
       }
 
       if (headCopied == head.size()) {

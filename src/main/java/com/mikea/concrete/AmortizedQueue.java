@@ -1,62 +1,19 @@
 package com.mikea.concrete;
 
-import java.util.NoSuchElementException;
-
-public class AmortizedQueue<T> implements PQueue<T, AmortizedQueue<T>> {
-  private final Stack<T> head;
-  private final Stack<T> tail;
-
-  private AmortizedQueue(Stack<T> head, Stack<T> tail) {
-    if (head.isEmpty() && !tail.isEmpty()) {
-      this.head = tail.reverse();
-      this.tail = new Stack<T>();
-    } else {
-      this.head = head;
-      this.tail = tail;
-    }
+public class AmortizedQueue<T> extends AmortizedQueueImpl<T, AmortizedQueue<T>> {
+  private AmortizedQueue() {
   }
 
-  public AmortizedQueue() {
-    this(new Stack<T>(), new Stack<T>());
+  protected AmortizedQueue(Stack<T> head, Stack<T> tail) {
+    super(head, tail);
   }
 
   @Override
-  public boolean isEmpty() {
-    return head.isEmpty();
+  protected AmortizedQueue<T> newSelf(Stack<T> head, Stack<T> tail) {
+    return new AmortizedQueue<T>(head, tail);
   }
 
-  @Override
-  public int size() {
-    return head.size() + tail.size();
-  }
-
-  /**
-   * Push element to the back of the queue. Worst-case O(N), amortized O(1).
-   */
-  @Override
-  public AmortizedQueue<T> pushFront(T t) {
-    return new AmortizedQueue<T>(head, tail.push(t));
-  }
-
-  /**
-   * Pop element from the head of the queue. O(1).
-   */
-  @Override
-  public AmortizedQueue<T> popFront() throws NoSuchElementException {
-    if (isEmpty()) {
-      throw new NoSuchElementException();
-    }
-    return new AmortizedQueue<T>(head.pop(), tail);
-  }
-
-  /**
-   * Peek at the head element. Null if empty. O(1).
-   */
-  @Override
-  public T peekFront() {
-    if (isEmpty()) {
-      return null;
-    }
-    return head.peek();
+  public static <T> AmortizedQueue<T> newAmortizedQueue() {
+    return new AmortizedQueue<T>();
   }
 }

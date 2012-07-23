@@ -7,17 +7,19 @@ import junit.framework.TestCase;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import static com.mikea.concrete.Stack.newStack;
+
 public class StackTest extends TestCase {
 
   public void testEmptyStack() throws Exception {
-    Stack<String> stack = new Stack<String>();
+    Stack<String> stack = newStack();
     assertTrue(stack.isEmpty());
     assertEquals("[]", Iterables.toString(stack));
 
-    assertNull(stack.peek());
+    assertNull(stack.peekFront());
 /*
     try {
-      stack.peek();
+      stack.peekFront();
       fail();
     } catch (NoSuchElementException e) {
       // expected;
@@ -25,7 +27,7 @@ public class StackTest extends TestCase {
 */
 
     try {
-      stack.pop();
+      stack.popFront();
       fail();
     } catch (NoSuchElementException e) {
       // expected;
@@ -33,63 +35,63 @@ public class StackTest extends TestCase {
   }
 
   public void testIterator() throws Exception {
-    Stack<String> stack = new Stack<String>();
-    stack = stack.push("a");
-    stack = stack.push("b");
-    stack = stack.push("c");
-    stack = stack.push("d");
-    stack = stack.push("e");
+    Stack<String> stack = newStack();
+    stack = stack.pushFront("a");
+    stack = stack.pushFront("b");
+    stack = stack.pushFront("c");
+    stack = stack.pushFront("d");
+    stack = stack.pushFront("e");
 
     assertFalse(stack.isEmpty());
     assertEquals("[e, d, c, b, a]", Iterables.toString(stack));
   }
 
   public void testPopAndPeek() throws Exception {
-    Stack<String> stack = new Stack<String>();
+    Stack<String> stack = newStack();
     assertTrue(stack.isEmpty());
 
-    stack = stack.push("a");
-    assertEquals("a", stack.peek());
+    stack = stack.pushFront("a");
+    assertEquals("a", stack.peekFront());
     assertFalse(stack.isEmpty());
 
-    stack = stack.push("b");
-    assertEquals("b", stack.peek());
+    stack = stack.pushFront("b");
+    assertEquals("b", stack.peekFront());
     assertFalse(stack.isEmpty());
 
-    stack = stack.push("c");
-    assertEquals("c", stack.peek());
+    stack = stack.pushFront("c");
+    assertEquals("c", stack.peekFront());
     assertFalse(stack.isEmpty());
 
-    stack = stack.push("d");
-    assertEquals("d", stack.peek());
+    stack = stack.pushFront("d");
+    assertEquals("d", stack.peekFront());
     assertFalse(stack.isEmpty());
 
-    stack = stack.push("e");
-    assertEquals("e", stack.peek());
+    stack = stack.pushFront("e");
+    assertEquals("e", stack.peekFront());
     assertFalse(stack.isEmpty());
 
-    stack = stack.pop();
-    assertEquals("d", stack.peek());
+    stack = stack.popFront();
+    assertEquals("d", stack.peekFront());
     assertFalse(stack.isEmpty());
 
-    stack = stack.pop();
-    assertEquals("c", stack.peek());
+    stack = stack.popFront();
+    assertEquals("c", stack.peekFront());
     assertFalse(stack.isEmpty());
 
-    stack = stack.pop();
-    assertEquals("b", stack.peek());
+    stack = stack.popFront();
+    assertEquals("b", stack.peekFront());
     assertFalse(stack.isEmpty());
 
-    stack = stack.pop();
-    assertEquals("a", stack.peek());
+    stack = stack.popFront();
+    assertEquals("a", stack.peekFront());
     assertFalse(stack.isEmpty());
 
-    stack = stack.pop();
+    stack = stack.popFront();
     assertTrue(stack.isEmpty());
   }
 
   public void testEmptyStackIterator() throws Exception {
-    Stack<String> stack = new Stack<String>();
+    Stack<String> stack = newStack();
     Iterator<String> iterator = stack.iterator();
     assertFalse(iterator.hasNext());
 
@@ -108,14 +110,14 @@ public class StackTest extends TestCase {
   }
 
   public void testReverse() throws Exception {
-    Stack<String> stack = new Stack<String>();
-    stack = stack.push("a");
-    stack = stack.push("b");
-    stack = stack.push("c");
-    stack = stack.push("d");
-    stack = stack.push("e");
+    Stack<String> stack = newStack();
+    stack = stack.pushFront("a");
+    stack = stack.pushFront("b");
+    stack = stack.pushFront("c");
+    stack = stack.pushFront("d");
+    stack = stack.pushFront("e");
 
     assertEquals("[e, d, c, b, a]", Iterables.toString(stack));
-    assertEquals("[a, b, c, d, e]", Iterables.toString(stack.reverse()));
+    assertEquals("[a, b, c, d, e]", Iterables.toString(Stacks.reverse(stack)));
   }
 }

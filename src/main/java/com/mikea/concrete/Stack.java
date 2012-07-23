@@ -20,7 +20,7 @@ public class Stack<T> implements PStack<T, Stack<T>>, Iterable<T> {
   /**
    * Creates an empty stack.
    */
-  public Stack() {
+  private Stack() {
     this(null, null, 0);
   }
 
@@ -39,7 +39,7 @@ public class Stack<T> implements PStack<T, Stack<T>>, Iterable<T> {
    * Pushes new value on the top of the stack. O(1).
    */
   @Override
-  public Stack<T> push(T value) {
+  public Stack<T> pushFront(T value) {
     return new Stack<T>(value, this, size + 1);
   }
 
@@ -47,7 +47,7 @@ public class Stack<T> implements PStack<T, Stack<T>>, Iterable<T> {
    * Gets value from the top of the stack. O(1).
    */
   @Override
-  public T peek() {
+  public T peekFront() {
     if (isEmpty()) {
       return null;
     }
@@ -58,7 +58,7 @@ public class Stack<T> implements PStack<T, Stack<T>>, Iterable<T> {
    * Pops(removes) value from the top of the stack. O(1).
    */
   @Override
-  public Stack<T> pop() {
+  public Stack<T> popFront() {
     if (isEmpty()) {
       throw new NoSuchElementException("Empty stack");
     }
@@ -92,18 +92,6 @@ public class Stack<T> implements PStack<T, Stack<T>>, Iterable<T> {
     };
   }
 
-  /**
-   * Reverses the stack. O(N).
-   */
-  @Override
-  public Stack<T> reverse() {
-    Stack<T> result = new Stack<T>();
-    for (T t : this) {
-      result = result.push(t);
-    }
-    return result;
-  }
-
   @Override
   public String toString() {
     StringBuilder result = new StringBuilder();
@@ -116,5 +104,9 @@ public class Stack<T> implements PStack<T, Stack<T>>, Iterable<T> {
     result.insert(0, "[");
     result.append("]");
     return result.toString();
+  }
+
+  public static <T> Stack<T> newStack() {
+    return new Stack<T>();
   }
 }
