@@ -21,64 +21,64 @@ public abstract class QueueTestCase<Q extends PQueue<String, Q>> extends TestCas
 
   public void testPush() throws Exception {
     Q queue = createQueue();
-    queue = queue.push("a");
+    queue = queue.pushFront("a");
     assertFalse(queue.isEmpty());
-    queue = queue.push("b");
+    queue = queue.pushFront("b");
     assertFalse(queue.isEmpty());
-    queue = queue.push("c");
+    queue = queue.pushFront("c");
     assertFalse(queue.isEmpty());
-    queue = queue.push("d");
+    queue = queue.pushFront("d");
     assertFalse(queue.isEmpty());
-    queue = queue.push("e");
+    queue = queue.pushFront("e");
     assertFalse(queue.isEmpty());
   }
 
   public void testPushPopPeek() throws Exception {
     Q queue = createQueue();
 
-    queue = queue.push("a");
+    queue = queue.pushFront("a");
     assertFalse(queue.isEmpty());
-    assertEquals("a", queue.peek());
+    assertEquals("a", queue.peekFront());
 
-    queue = queue.push("b");
+    queue = queue.pushFront("b");
     assertFalse(queue.isEmpty());
-    assertEquals("a", queue.peek());
+    assertEquals("a", queue.peekFront());
 
-    queue = queue.push("c");
+    queue = queue.pushFront("c");
     assertFalse(queue.isEmpty());
-    assertEquals("a", queue.peek());
+    assertEquals("a", queue.peekFront());
 
-    queue = queue.push("d");
+    queue = queue.pushFront("d");
     assertFalse(queue.isEmpty());
-    assertEquals("a", queue.peek());
+    assertEquals("a", queue.peekFront());
 
-    queue = queue.push("e");
+    queue = queue.pushFront("e");
     assertFalse(queue.isEmpty());
-    assertEquals("a", queue.peek());
+    assertEquals("a", queue.peekFront());
 
-    queue = queue.pop();
+    queue = queue.popFront();
     assertFalse(queue.isEmpty());
-    assertEquals("b", queue.peek());
+    assertEquals("b", queue.peekFront());
 
-    queue = queue.pop();
+    queue = queue.popFront();
     assertFalse(queue.isEmpty());
-    assertEquals("c", queue.peek());
+    assertEquals("c", queue.peekFront());
 
-    queue = queue.pop();
+    queue = queue.popFront();
     assertFalse(queue.isEmpty());
-    assertEquals("d", queue.peek());
+    assertEquals("d", queue.peekFront());
 
-    queue = queue.pop();
+    queue = queue.popFront();
     assertFalse(queue.isEmpty());
-    assertEquals("e", queue.peek());
+    assertEquals("e", queue.peekFront());
 
-    queue = queue.pop();
+    queue = queue.popFront();
     assertTrue(queue.isEmpty());
 
-    assertNull(queue.peek());
+    assertNull(queue.peekFront());
 /*
     try {
-      queue.peek();
+      queue.peekFront();
       fail();
     } catch (NoSuchElementException e) {
       // expected
@@ -86,7 +86,7 @@ public abstract class QueueTestCase<Q extends PQueue<String, Q>> extends TestCas
 */
 
     try {
-      queue.pop();
+      queue.popFront();
       fail();
     } catch (NoSuchElementException e) {
       // expected
@@ -96,24 +96,24 @@ public abstract class QueueTestCase<Q extends PQueue<String, Q>> extends TestCas
   public void testSequence1() throws Exception {
     Q queue = createQueue();
 
-    queue = queue.push("0");
-    assertEquals("0", queue.peek());
-    queue = queue.push("1");
-    assertEquals("0", queue.peek());
-    queue = queue.push("2");
-    assertEquals("0", queue.peek());
-    queue = queue.push("3");
-    assertEquals("0", queue.peek());
-    queue = queue.pop();
-    assertEquals("1", queue.peek());
-    queue = queue.push("4");
-    assertEquals("1", queue.peek());
-    queue = queue.push("5");
-    assertEquals("1", queue.peek());
-    queue = queue.pop();
-    assertEquals("2", queue.peek());
-    queue = queue.pop();
-    assertEquals("3", queue.peek());
+    queue = queue.pushFront("0");
+    assertEquals("0", queue.peekFront());
+    queue = queue.pushFront("1");
+    assertEquals("0", queue.peekFront());
+    queue = queue.pushFront("2");
+    assertEquals("0", queue.peekFront());
+    queue = queue.pushFront("3");
+    assertEquals("0", queue.peekFront());
+    queue = queue.popFront();
+    assertEquals("1", queue.peekFront());
+    queue = queue.pushFront("4");
+    assertEquals("1", queue.peekFront());
+    queue = queue.pushFront("5");
+    assertEquals("1", queue.peekFront());
+    queue = queue.popFront();
+    assertEquals("2", queue.peekFront());
+    queue = queue.popFront();
+    assertEquals("3", queue.peekFront());
   }
 
   public void testRandomOperations() throws Exception {
@@ -131,18 +131,18 @@ public abstract class QueueTestCase<Q extends PQueue<String, Q>> extends TestCas
       }
       switch (random.nextInt(2)) {
         case 0: {
-          queue1 = queue1.push(String.valueOf(iteration));
+          queue1 = queue1.pushFront(String.valueOf(iteration));
           queue2.add(String.valueOf(iteration));
-          ops.add("push(" + iteration + ")");
+          ops.add("pushFront(" + iteration + ")");
           break;
         }
         case 1: {
-          ops.add("pop");
+          ops.add("popFront");
           boolean noSuchElementException1 = false;
           boolean noSuchElementException2 = false;
 
           try {
-            queue1 = queue1.pop();
+            queue1 = queue1.popFront();
           } catch (NoSuchElementException e) {
             noSuchElementException1 = true;
           }
@@ -157,7 +157,7 @@ public abstract class QueueTestCase<Q extends PQueue<String, Q>> extends TestCas
         }
       }
 
-      assertEquals(ops.toString(), queue2.peek(), queue1.peek());
+      assertEquals(ops.toString(), queue2.peek(), queue1.peekFront());
       assertEquals(ops.toString(), queue2.isEmpty(), queue1.isEmpty());
     }
   }

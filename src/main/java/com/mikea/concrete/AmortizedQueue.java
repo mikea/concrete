@@ -34,7 +34,7 @@ public class AmortizedQueue<T> implements PQueue<T, AmortizedQueue<T>> {
    * Push element to the back of the queue. Worst-case O(N), amortized O(1).
    */
   @Override
-  public AmortizedQueue<T> push(T t) {
+  public AmortizedQueue<T> pushFront(T t) {
     return new AmortizedQueue<T>(head, tail.push(t));
   }
 
@@ -42,7 +42,7 @@ public class AmortizedQueue<T> implements PQueue<T, AmortizedQueue<T>> {
    * Pop element from the head of the queue. O(1).
    */
   @Override
-  public AmortizedQueue<T> pop() throws NoSuchElementException {
+  public AmortizedQueue<T> popFront() throws NoSuchElementException {
     if (isEmpty()) {
       throw new NoSuchElementException();
     }
@@ -53,7 +53,7 @@ public class AmortizedQueue<T> implements PQueue<T, AmortizedQueue<T>> {
    * Peek at the head element. Null if empty. O(1).
    */
   @Override
-  public T peek() {
+  public T peekFront() {
     if (isEmpty()) {
       return null;
     }

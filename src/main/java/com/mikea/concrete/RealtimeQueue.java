@@ -52,18 +52,18 @@ public class RealtimeQueue<T> implements PQueue<T, RealtimeQueue<T>> {
   }
 
   @Override
-  public RealtimeQueue<T> push(T value) {
+  public RealtimeQueue<T> pushFront(T value) {
     return newQueue(head, tail.push(value), tailReverseFrom, tailReverseTo, headReverseFrom,
         headReverseTo, headCopied);
   }
 
   @Override
-  public RealtimeQueue<T> pop() {
+  public RealtimeQueue<T> popFront() {
     return newQueue(head.pop(), tail, tailReverseFrom, tailReverseTo, headReverseFrom, headReverseTo, headCopied);
   }
 
   @Override
-  public T peek() {
+  public T peekFront() {
     return head.peek();
   }
 
