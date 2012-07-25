@@ -6,7 +6,7 @@ public class Stacks {
   /**
    * Reverses the stack. O(N).
    */
-  public static <T, S extends PStack<T, S>> Stack<T> reverse(PStack<T, S> stack) {
+  public static <T> PStack<T> reverse(PStack<T> stack) {
     Stack<T> result = newStack();
 
     while (!stack.isEmpty()) {
@@ -19,15 +19,15 @@ public class Stacks {
   /**
    * Pushes all to target's back. Back of all will become back of result. O(|target|).
    */
-  public static <T> Stack<T> pushAllToBack(Stack<T> target, Stack<T> all) {
-    Stack<T> rtarget = reverse(target);
+  public static <T> PStack<T> pushAllToBack(PStack<T> target, PStack<T> all) {
+    PStack<T> rtarget = reverse(target);
     return pushAllToFront(all, rtarget);
   }
 
   /**
    * Pushes all to target's front. Back of all will become front of result. O(|all|).
    */
-  public static <T> Stack<T> pushAllToFront(Stack<T> target, Stack<T> all) {
+  public static <T> PStack<T> pushAllToFront(PStack<T> target, PStack<T> all) {
     while (!all.isEmpty()) {
       target = target.pushFront(all.peekFront());
       all = all.popFront();
@@ -39,10 +39,10 @@ public class Stacks {
   /**
    * Peeks the back of the stack. O(|stack|).
    */
-  public static <T> T peekBack(Stack<T> stack) {
+  public static <T> T peekBack(PStack<T> stack) {
     if (stack.isEmpty()) return null;
 
-    Stack<T> stackMinusOne = stack.popFront();
+    PStack<T> stackMinusOne = stack.popFront();
 
     while (!stackMinusOne.isEmpty()) {
       stack = stackMinusOne;
@@ -52,8 +52,8 @@ public class Stacks {
     return stack.peekFront();
   }
 
-  public static <T> Stack<T> popBack(Stack<T> stack) {
-    Stack<T> rstack = reverse(stack);
+  public static <T> PStack<T> popBack(PStack<T> stack) {
+    PStack<T> rstack = reverse(stack);
     rstack = rstack.popFront();
     return reverse(rstack);
   }

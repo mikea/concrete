@@ -6,7 +6,7 @@ import static com.mikea.concrete.Stack.newStack;
  * Real-time queue operation as described in "Real Time Queue Operations in Pure LISP" by
  * Hood, Robert T. & Melville, Robert C.
  */
-public class RealtimeQueue<T> implements PQueue<T, RealtimeQueue<T>> {
+public class RealtimeQueue<T> implements PQueue<T> {
   private final Stack<T> head;
   private final Stack<T> tail;
 
@@ -156,6 +156,11 @@ public class RealtimeQueue<T> implements PQueue<T, RealtimeQueue<T>> {
   public int size() {
     throw new UnsupportedOperationException(
         "size is not implemented in com.mikea.concrete.RealtimeQueue");
+  }
+
+  @Override
+  public RealtimeQueue<T> clear() {
+    return new RealtimeQueue<T>();
   }
 
   public static <T> RealtimeQueue<T> newRealtimeQueue() {

@@ -26,14 +26,14 @@ public class AmortizedDequeTest extends QueueTestCase<AmortizedDeque<String>>  {
   }
 
   @Override
-  protected Op<AmortizedDeque<String>> createRandomOp(int rnd, final int iteration) {
+  protected Op createRandomOp(int rnd, final int iteration) {
     switch (rnd) {
       case 2: {
-        return new Op<AmortizedDeque<String>>() {
+        return new Op() {
           @Override
-          public AmortizedDeque<String> run(AmortizedDeque<String> queue1, LinkedList<String> queue2) {
+          public PQueue<String> run(PQueue<String> queue1, LinkedList<String> queue2) {
             queue2.addFirst(String.valueOf(iteration));
-            return queue1.pushFront(String.valueOf(iteration));
+            return ((PDeque<String>) queue1).pushFront(String.valueOf(iteration));
           }
 
           @Override
@@ -43,9 +43,9 @@ public class AmortizedDequeTest extends QueueTestCase<AmortizedDeque<String>>  {
         };
       }
       case 3: {
-        return new Op<AmortizedDeque<String>>() {
+        return new Op() {
           @Override
-          public AmortizedDeque<String> run(AmortizedDeque<String> queue1, LinkedList<String> queue2) {
+          public PQueue<String> run(PQueue<String> queue1, LinkedList<String> queue2) {
             boolean noSuchElement1 = false;
             boolean noSuchElement2 = false;
             try {
@@ -55,7 +55,7 @@ public class AmortizedDequeTest extends QueueTestCase<AmortizedDeque<String>>  {
             }
 
             try {
-              queue1 = queue1.popBack();
+              queue1 = ((PDeque<String>) queue1).popBack();
             } catch (Exception e) {
               noSuchElement1 = true;
             }
@@ -76,8 +76,8 @@ public class AmortizedDequeTest extends QueueTestCase<AmortizedDeque<String>>  {
   }
 
   @Override
-  protected void assertSameState(AmortizedDeque<String> queue1, LinkedList<String> queue2) {
+  protected void assertSameState(PQueue<String> queue1, LinkedList<String> queue2) {
     super.assertSameState(queue1, queue2);
-    assertEquals(queue2.peekLast(), queue1.peekBack());
+    assertEquals(queue2.peekLast(), ((PDeque<String>)queue1).peekBack());
   }
 }

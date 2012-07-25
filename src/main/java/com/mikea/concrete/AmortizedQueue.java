@@ -5,15 +5,15 @@ import java.util.NoSuchElementException;
 import static com.mikea.concrete.Stack.newStack;
 import static com.mikea.concrete.Stacks.reverse;
 
-public class AmortizedQueue<T> implements PQueue<T, AmortizedQueue<T>> {
-  final Stack<T> head;
-  final Stack<T> tail;
+public class AmortizedQueue<T> implements PQueue<T> {
+  final PStack<T> head;
+  final PStack<T> tail;
 
   private AmortizedQueue() {
     this(Stack.<T>newStack(), Stack.<T>newStack());
   }
 
-  protected AmortizedQueue(Stack<T> head, Stack<T> tail) {
+  protected AmortizedQueue(PStack<T> head, PStack<T> tail) {
     if (head.size() >= tail.size()) {
       this.head = head;
       this.tail = tail;
@@ -35,6 +35,11 @@ public class AmortizedQueue<T> implements PQueue<T, AmortizedQueue<T>> {
   @Override
   public int size() {
     return head.size() + tail.size();
+  }
+
+  @Override
+  public PCollection<T> clear() {
+    return newAmortizedQueue();
   }
 
   /**

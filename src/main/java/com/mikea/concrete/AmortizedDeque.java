@@ -10,12 +10,12 @@ import static com.mikea.concrete.Stacks.reverse;
  *   |head| <= C * |tail| + 1
  *   |tail| <= C * |head| + 1
  */
-public class AmortizedDeque<T> implements PDeque<T, AmortizedDeque<T>> {
+public class AmortizedDeque<T> implements PDeque<T> {
   private static final int C = 2;
-  final Stack<T> head;
-  final Stack<T> tail;
+  final PStack<T> head;
+  final PStack<T> tail;
 
-  private AmortizedDeque(Stack<T> head, Stack<T> tail) {
+  private AmortizedDeque(PStack<T> head, PStack<T> tail) {
     if (head.size() >= tail.size()) {
       this.head = head;
       this.tail = tail;
@@ -66,6 +66,11 @@ public class AmortizedDeque<T> implements PDeque<T, AmortizedDeque<T>> {
   @Override
   public int size() {
     return head.size() + tail.size();
+  }
+
+  @Override
+  public PCollection<T> clear() {
+    return newAmortizedDeque();
   }
 
   /**

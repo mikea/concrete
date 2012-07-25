@@ -1,7 +1,7 @@
 package com.mikea.concrete;
 
-public interface PQueue<T, Self extends PQueue> extends PCollection<T, Self> {
-  Self pushBack(T value);
-  Self popFront();
+public interface PQueue<T> extends PCollection<T> {
+  PQueue<T> pushBack(T value);
+  PQueue<T> popFront();
   T peekFront();
 }

@@ -8,11 +8,11 @@ import static com.mikea.concrete.Stacks.reverse;
 /**
  *
  */
-public class AmortizedQueue2<T> implements PQueue<T, AmortizedQueue2<T>> {
-  final Stack<T> head;
-  final Stack<T> tail;
+public class AmortizedQueue2<T> implements PQueue<T> {
+  final PStack<T> head;
+  final PStack<T> tail;
 
-  protected AmortizedQueue2(Stack<T> head, Stack<T> tail) {
+  protected AmortizedQueue2(PStack<T> head, PStack<T> tail) {
     if (!head.isEmpty()) {
       this.head = head;
       this.tail = tail;
@@ -36,6 +36,11 @@ public class AmortizedQueue2<T> implements PQueue<T, AmortizedQueue2<T>> {
     return head.size() + tail.size();
   }
 
+  @Override
+  public AmortizedQueue2<T> clear() {
+    return newAmortizedQueue2();
+  }
+
   /**
    * Push element to the back of the queue. Worst-case O(N), amortized O(1).
    */
@@ -55,7 +60,7 @@ public class AmortizedQueue2<T> implements PQueue<T, AmortizedQueue2<T>> {
     return newSelf(head.popFront(), tail);
   }
 
-  protected AmortizedQueue2<T> newSelf(Stack<T> head, Stack<T> tail) {
+  protected AmortizedQueue2<T> newSelf(PStack<T> head, PStack<T> tail) {
     return new AmortizedQueue2<T>(head, tail);
   }
 

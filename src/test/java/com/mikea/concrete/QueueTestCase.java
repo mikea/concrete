@@ -6,7 +6,7 @@ import java.util.*;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-public abstract class QueueTestCase<Q extends PQueue<String, Q>> extends TestCase {
+public abstract class QueueTestCase<Q extends PQueue<String>> extends TestCase {
 
   protected abstract Q newQueue();
 
@@ -16,7 +16,7 @@ public abstract class QueueTestCase<Q extends PQueue<String, Q>> extends TestCas
   }
 
   public void testPush() throws Exception {
-    Q queue = newQueue();
+    PQueue<String> queue = newQueue();
     queue = queue.pushBack("a");
     assertFalse(queue.isEmpty());
     queue = queue.pushBack("b");
@@ -30,7 +30,7 @@ public abstract class QueueTestCase<Q extends PQueue<String, Q>> extends TestCas
   }
 
   public void testPushPopPeek() throws Exception {
-    Q queue = newQueue();
+    PQueue<String> queue = newQueue();
 
     queue = queue.pushBack("a");
     assertFalse(queue.isEmpty());
@@ -90,7 +90,7 @@ public abstract class QueueTestCase<Q extends PQueue<String, Q>> extends TestCas
   }
 
   public void testSequence1() throws Exception {
-    Q queue = newQueue();
+    PQueue<String> queue = newQueue();
 
     queue = queue.pushBack("0");
     assertEquals("0", queue.peekFront());
@@ -116,12 +116,12 @@ public abstract class QueueTestCase<Q extends PQueue<String, Q>> extends TestCas
     compareQueues(newQueue(), new LinkedList<String>());
   }
 
-  protected void compareQueues(Q queue1, LinkedList<String> queue2) {
-    List<Op<Q>> ops = newArrayList();
+  protected void compareQueues(PQueue<String> queue1, LinkedList<String> queue2) {
+    List<Op> ops = newArrayList();
     Random random = new Random();
 
     for (int iteration = 0; iteration < 10000; ++iteration) {
-      Op<Q> op = createRandomOp(random.nextInt(getNumberOfOps()), iteration);
+      Op op = createRandomOp(random.nextInt(getNumberOfOps()), iteration);
       ops.add(op);
 
       queue1 = op.run(queue1, queue2);
@@ -133,22 +133,22 @@ public abstract class QueueTestCase<Q extends PQueue<String, Q>> extends TestCas
     return 2;
   }
 
-  protected void assertSameState(Q queue1, LinkedList<String> queue2) {
+  protected void assertSameState(PQueue<String> queue1, LinkedList<String> queue2) {
     assertEquals(queue2.isEmpty(), queue1.isEmpty());
     assertEquals(queue2.peekFirst(), queue1.peekFront());
   }
 
-  protected Op<Q> createRandomOp(int rnd, final int iteration) {
+  protected Op createRandomOp(int rnd, final int iteration) {
     switch (rnd) {
       case 0: {
-        return new Op<Q>() {
+        return new Op() {
           @Override
           public String toString() {
             return "pushBack(" + iteration + ")";
           }
 
           @Override
-          public Q run(Q queue1, LinkedList<String> queue2) {
+          public PQueue<String> run(PQueue<String> queue1, LinkedList<String> queue2) {
             queue2.add(String.valueOf(iteration));
             return queue1.pushBack(String.valueOf(iteration));
           }
@@ -156,9 +156,9 @@ public abstract class QueueTestCase<Q extends PQueue<String, Q>> extends TestCas
       }
 
       case 1: {
-        return new Op<Q>() {
+        return new Op() {
           @Override
-          public Q run(Q queue1, LinkedList<String> queue2) {
+          public PQueue<String> run(PQueue<String> queue1, LinkedList<String> queue2) {
             boolean noSuchElementException1 = false;
             boolean noSuchElementException2 = false;
 
@@ -188,7 +188,7 @@ public abstract class QueueTestCase<Q extends PQueue<String, Q>> extends TestCas
     throw new IllegalStateException("Bad operation index: " + rnd);
   }
 
-  protected interface Op<Q> {
-    Q run(Q queue1, LinkedList<String> queue2);
+  protected interface Op {
+    PQueue<String> run(PQueue<String> queue1, LinkedList<String> queue2);
   }
 }
