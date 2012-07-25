@@ -7,7 +7,7 @@ Fully persistent data structures in Java.
 Stack
 ======
 
-    Stack<String> stack = new Stack<String>();
+    Stack<String> stack = Stack.newStack();
     stack = stack.push("a");
     assertEquals("a", stack.peek());
     stack = stack.pop();
@@ -17,7 +17,7 @@ Stack
 Queue
 ======
 
-    RealtimeQueue<String> queue = new RealtimeQueue<String>();
+    RealtimeQueue<String> queue = RealtimeQueue.newRealtimeQueue();
     queue = queue.push("a");
     queue = queue.push("b");
     assertEquals("a", queue.peek());
