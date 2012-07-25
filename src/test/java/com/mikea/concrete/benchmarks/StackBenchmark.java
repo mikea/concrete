@@ -16,7 +16,7 @@ public class StackBenchmark extends SimpleBenchmark {
   @Param
   private Test test;
 
-  @Param({"10", "100", /*"1000"*/})
+  @Param({"10", "100", "1000"})
   private int length;
 
   @Param
