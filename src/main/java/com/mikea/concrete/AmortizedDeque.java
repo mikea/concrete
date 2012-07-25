@@ -69,7 +69,7 @@ public class AmortizedDeque<T> implements PDeque<T> {
   }
 
   @Override
-  public PCollection<T> clear() {
+  public PDeque<T> clear() {
     return newAmortizedDeque();
   }
 

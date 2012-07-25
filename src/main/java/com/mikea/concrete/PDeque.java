@@ -12,4 +12,7 @@ public interface PDeque<T> extends PQueue<T> {
 
   @Override
   PDeque<T> popFront();
+
+  @Override
+  PDeque<T> clear();
 }

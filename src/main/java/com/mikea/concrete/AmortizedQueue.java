@@ -38,7 +38,7 @@ public class AmortizedQueue<T> implements PQueue<T> {
   }
 
   @Override
-  public PCollection<T> clear() {
+  public PQueue<T> clear() {
     return newAmortizedQueue();
   }
 
