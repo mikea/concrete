@@ -49,7 +49,7 @@ public class RealtimeQueue<T> implements PQueue<T, RealtimeQueue<T>> {
     this.headCopied = headCopied;
   }
 
-  public RealtimeQueue() {
+  private RealtimeQueue() {
     this(Stack.<T>newStack(), Stack.<T>newStack(), null, null, null, null, 0);
   }
 
@@ -156,5 +156,9 @@ public class RealtimeQueue<T> implements PQueue<T, RealtimeQueue<T>> {
   public int size() {
     throw new UnsupportedOperationException(
         "size is not implemented in com.mikea.concrete.RealtimeQueue");
+  }
+
+  public static <T> RealtimeQueue<T> newRealtimeQueue() {
+    return new RealtimeQueue<T>();
   }
 }
