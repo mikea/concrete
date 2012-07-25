@@ -4,7 +4,6 @@ import com.google.caliper.Param;
 import com.google.caliper.Runner;
 import com.google.caliper.SimpleBenchmark;
 import com.mikea.concrete.AmortizedQueue;
-import com.mikea.concrete.AmortizedQueue2;
 import com.mikea.concrete.RealtimeQueue;
 
 import java.util.ArrayList;
@@ -15,14 +14,13 @@ import java.util.Random;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.newLinkedList;
 import static com.mikea.concrete.AmortizedQueue.newAmortizedQueue;
-import static com.mikea.concrete.AmortizedQueue2.newAmortizedQueue2;
 import static com.mikea.concrete.RealtimeQueue.newRealtimeQueue;
 
 public class QueueBenchmark extends SimpleBenchmark {
   @Param
   private Test test;
 
-  @Param({"10"/*, "100", "1000"*/})
+  @Param({"10", "100", "1000", "10000"})
   private int length;
 
   @Param
@@ -41,7 +39,6 @@ public class QueueBenchmark extends SimpleBenchmark {
     Object o = "foo";
     for (int i = 0; i < reps; ++i) {
       AmortizedQueue<Object> amortizedQueue = newAmortizedQueue();
-      AmortizedQueue2<Object> amortizedQueue2 = newAmortizedQueue2();
       RealtimeQueue<Object> realtimeQueue = newRealtimeQueue();
       LinkedList<Object> linkedList = newLinkedList();
       ArrayList<Object> arrayList = newArrayList();
@@ -53,9 +50,6 @@ public class QueueBenchmark extends SimpleBenchmark {
             switch (implementation) {
               case AMORTIZED_QUEUE:
                 amortizedQueue = amortizedQueue.pushBack(o);
-                break;
-              case AMORTIZED_QUEUE2:
-                amortizedQueue2 = amortizedQueue2.pushBack(o);
                 break;
               case REALTIME_QUEUE:
                 realtimeQueue = realtimeQueue.pushBack(o);
@@ -72,9 +66,6 @@ public class QueueBenchmark extends SimpleBenchmark {
             switch (implementation) {
               case AMORTIZED_QUEUE:
                 amortizedQueue = amortizedQueue.popFront();
-                break;
-              case AMORTIZED_QUEUE2:
-                amortizedQueue2 = amortizedQueue2.popFront();
                 break;
               case REALTIME_QUEUE:
                 realtimeQueue = realtimeQueue.popFront();
@@ -93,13 +84,14 @@ public class QueueBenchmark extends SimpleBenchmark {
   }
 
   enum Implementation {
-    AMORTIZED_QUEUE, AMORTIZED_QUEUE2, REALTIME_QUEUE, LINKED_LIST, ARRAY_LIST
+    AMORTIZED_QUEUE, REALTIME_QUEUE, LINKED_LIST, ARRAY_LIST
   }
 
   enum Op {
     PUSH_BACK, POP_FRONT
   }
 
+  @SuppressWarnings("UnusedDeclaration")
   enum Test {
     PUSH_BACK {
       @Override

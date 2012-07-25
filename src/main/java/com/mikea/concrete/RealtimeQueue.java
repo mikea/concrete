@@ -72,6 +72,7 @@ public class RealtimeQueue<T> implements PQueue<T> {
   private static <T> RealtimeQueue<T> newQueue(Stack<T> head, Stack<T> tail,
       Stack<T> tailReverseFrom, Stack<T> tailReverseTo, Stack<T> headReverseFrom,
       Stack<T> headReverseTo, long headCopied) {
+
     RealtimeQueue<T> result = new RealtimeQueue<T>(head, tail, tailReverseFrom,
         tailReverseTo, headReverseFrom, headReverseTo, headCopied);
 

@@ -1,0 +1,4 @@
+Benchmark parameters example:
+
+   --delimiter ; -Dlength=100 -Dimplementation=AMORTIZED_QUEUE;AMORTIZED_QUEUE2;LINKED_LIST -Jhprof=-agentlib:hprof=cpu=samples,force=n
+

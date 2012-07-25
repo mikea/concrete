@@ -20,7 +20,7 @@ public class AmortizedDeque<T> implements PDeque<T> {
       this.head = head;
       this.tail = tail;
     } else {
-      this.head = Stacks.pushAllToBack(head, reverse(tail));
+      this.head = Stacks.append(head, reverse(tail));
       this.tail = newStack();
     }
   }

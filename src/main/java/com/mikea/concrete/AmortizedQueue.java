@@ -14,11 +14,11 @@ public class AmortizedQueue<T> implements PQueue<T> {
   }
 
   protected AmortizedQueue(PStack<T> head, PStack<T> tail) {
-    if (head.size() >= tail.size()) {
+    if (!head.isEmpty()) {
       this.head = head;
       this.tail = tail;
     } else {
-      this.head = Stacks.pushAllToBack(head, reverse(tail));
+      this.head = reverse(tail);
       this.tail = newStack();
     }
   }
