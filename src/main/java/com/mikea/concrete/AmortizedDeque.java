@@ -2,37 +2,46 @@ package com.mikea.concrete;
 
 import java.util.NoSuchElementException;
 
+import static com.mikea.concrete.Stack.newStack;
+import static com.mikea.concrete.Stacks.reverse;
+
 /**
- *
+ * Invariants:
+ *   |head| <= C * |tail| + 1
+ *   |tail| <= C * |head| + 1
  */
-public class AmortizedDeque<T> extends AmortizedQueueImpl<T, AmortizedDeque<T>> implements PDeque<T, AmortizedDeque<T>> {
+public class AmortizedDeque<T> implements PDeque<T, AmortizedDeque<T>> {
   private static final int C = 2;
+  final Stack<T> head;
+  final Stack<T> tail;
 
   private AmortizedDeque(Stack<T> head, Stack<T> tail) {
-    super(head, tail);
+    if (head.size() >= tail.size()) {
+      this.head = head;
+      this.tail = tail;
+    } else {
+      this.head = Stacks.pushAllToBack(head, reverse(tail));
+      this.tail = newStack();
+    }
   }
 
   private AmortizedDeque() {
-  }
-
-  @Override
-  protected AmortizedDeque<T> newSelf(Stack<T> head, Stack<T> tail) {
-    return new AmortizedDeque<T>(head, tail);
+    this(Stack.<T>newStack(), Stack.<T>newStack());
   }
 
   @Override
   public AmortizedDeque<T> pushFront(T value) {
-    return newSelf(head.pushFront(value), tail);
+    return new AmortizedDeque<T>(head.pushFront(value), tail);
   }
 
   @Override
   public AmortizedDeque<T> popBack() {
     if (!tail.isEmpty()) {
-      return newSelf(head, tail.popFront());
+      return new AmortizedDeque<T>(head, tail.popFront());
     } else if (head.isEmpty()) {
       throw new NoSuchElementException();
     } else {
-      return newSelf(Stacks.popBack(head), tail);
+      return new AmortizedDeque<T>(Stacks.popBack(head), tail);
     }
   }
 
@@ -49,5 +58,43 @@ public class AmortizedDeque<T> extends AmortizedQueueImpl<T, AmortizedDeque<T>> 
     return new AmortizedDeque<T>();
   }
 
+  @Override
+  public boolean isEmpty() {
+    return head.isEmpty();
+  }
 
+  @Override
+  public int size() {
+    return head.size() + tail.size();
+  }
+
+  /**
+   * Push element to the back of the queue. Worst-case O(N), amortized O(1).
+   */
+  @Override
+  public AmortizedDeque<T> pushBack(T t) {
+    return new AmortizedDeque<T>(head, tail.pushFront(t));
+  }
+
+  /**
+   * Pop element from the head of the queue. O(1).
+   */
+  @Override
+  public AmortizedDeque<T> popFront() throws NoSuchElementException {
+    if (isEmpty()) {
+      throw new NoSuchElementException();
+    }
+    return new AmortizedDeque<T>(head.popFront(), tail);
+  }
+
+  /**
+   * Peek at the head element. Null if empty. O(1).
+   */
+  @Override
+  public T peekFront() {
+    if (isEmpty()) {
+      return null;
+    }
+    return head.peekFront();
+  }
 }

@@ -6,23 +6,23 @@ import static com.mikea.concrete.Stack.newStack;
 import static com.mikea.concrete.Stacks.reverse;
 
 /**
- * Invariants: |head| >= |tail|
+ *
  */
-abstract class AmortizedQueueImpl<T, Self extends AmortizedQueueImpl<T, ?>> implements PQueue<T, Self> {
+public class AmortizedQueue2<T> implements PQueue<T, AmortizedQueue2<T>> {
   final Stack<T> head;
   final Stack<T> tail;
 
-  protected AmortizedQueueImpl(Stack<T> head, Stack<T> tail) {
-    if (head.size() >= tail.size()) {
+  protected AmortizedQueue2(Stack<T> head, Stack<T> tail) {
+    if (!head.isEmpty()) {
       this.head = head;
       this.tail = tail;
     } else {
-      this.head = Stacks.pushAllToBack(head, reverse(tail));
+      this.head = reverse(tail);
       this.tail = newStack();
     }
   }
 
-  protected AmortizedQueueImpl() {
+  protected AmortizedQueue2() {
     this(Stack.<T>newStack(), Stack.<T>newStack());
   }
 
@@ -40,7 +40,7 @@ abstract class AmortizedQueueImpl<T, Self extends AmortizedQueueImpl<T, ?>> impl
    * Push element to the back of the queue. Worst-case O(N), amortized O(1).
    */
   @Override
-  public Self pushBack(T t) {
+  public AmortizedQueue2<T> pushBack(T t) {
     return newSelf(head, tail.pushFront(t));
   }
 
@@ -48,14 +48,16 @@ abstract class AmortizedQueueImpl<T, Self extends AmortizedQueueImpl<T, ?>> impl
    * Pop element from the head of the queue. O(1).
    */
   @Override
-  public Self popFront() throws NoSuchElementException {
+  public AmortizedQueue2<T> popFront() throws NoSuchElementException {
     if (isEmpty()) {
       throw new NoSuchElementException();
     }
     return newSelf(head.popFront(), tail);
   }
 
-  protected abstract Self newSelf(Stack<T> head, Stack<T> tail);
+  protected AmortizedQueue2<T> newSelf(Stack<T> head, Stack<T> tail) {
+    return new AmortizedQueue2<T>(head, tail);
+  }
 
   /**
    * Peek at the head element. Null if empty. O(1).
@@ -67,4 +69,9 @@ abstract class AmortizedQueueImpl<T, Self extends AmortizedQueueImpl<T, ?>> impl
     }
     return head.peekFront();
   }
+
+  public static <T> AmortizedQueue2<T> newAmortizedQueue2() {
+    return new AmortizedQueue2<T>();
+  }
+
 }
