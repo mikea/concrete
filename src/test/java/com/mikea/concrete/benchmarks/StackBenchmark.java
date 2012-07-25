@@ -29,7 +29,7 @@ public class StackBenchmark extends SimpleBenchmark {
   protected void setUp() throws Exception {
     super.setUp();
 
-    ops = test.generateOps(length);
+    ops = test.createOps(length);
   }
 
   public void time(int reps) {
@@ -83,7 +83,7 @@ public class StackBenchmark extends SimpleBenchmark {
   enum Test {
     PUSH_FRONT {
       @Override
-      List<Op> generateOps(int length) {
+      List<Op> createOps(int length) {
         List<Op> result = newArrayList();
         for (int i = 0; i < length; ++i) {
           result.add(Op.PUSH_FRONT);
@@ -94,7 +94,7 @@ public class StackBenchmark extends SimpleBenchmark {
 
     PUSH_ALL_POP_ALL {
       @Override
-      List<Op> generateOps(int length) {
+      List<Op> createOps(int length) {
         List<Op> result = newArrayList();
         for (int i = 0; i < length; ++i) {
           result.add(Op.PUSH_FRONT);
@@ -108,7 +108,7 @@ public class StackBenchmark extends SimpleBenchmark {
 
     RANDOM {
       @Override
-      public List<Op> generateOps(int length) {
+      public List<Op> createOps(int length) {
         Random rnd = new Random();
         List<Op> result = newArrayList();
 
@@ -138,7 +138,7 @@ public class StackBenchmark extends SimpleBenchmark {
 
     ZIGZAG {
       @Override
-      List<Op> generateOps(int length) {
+      List<Op> createOps(int length) {
         List<Op> result = newArrayList();
 
         for (int i = 0; i < length; ++i) {
@@ -154,7 +154,7 @@ public class StackBenchmark extends SimpleBenchmark {
       }
     };
 
-    abstract List<Op> generateOps(int length);
+    abstract List<Op> createOps(int length);
   }
 
   public static void main(String[] args) {
