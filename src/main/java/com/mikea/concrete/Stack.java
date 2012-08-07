@@ -1,5 +1,7 @@
 package com.mikea.concrete;
 
+import com.google.common.collect.Iterables;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -92,23 +94,14 @@ public class Stack<T> implements PStack<T>, Iterable<T> {
 
       @Override
       public void remove() {
-        throw new UnsupportedOperationException("remove is not implemented in ");
+        throw new UnsupportedOperationException("remove is not implemented.");
       }
     };
   }
 
   @Override
   public String toString() {
-    StringBuilder result = new StringBuilder();
-    for (T t : this) {
-      if (result.length() != 0) {
-        result.append(", ");
-      }
-      result.append(t.toString());
-    }
-    result.insert(0, "[");
-    result.append("]");
-    return result.toString();
+    return Iterables.toString(this);
   }
 
   public static <T> Stack<T> newStack() {
