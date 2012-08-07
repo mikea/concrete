@@ -80,6 +80,7 @@ public class StackBenchmark extends SimpleBenchmark {
     PUSH_FRONT, POP_FRONT
   }
 
+  @SuppressWarnings("UnusedDeclaration")
   enum Test {
     PUSH_FRONT {
       @Override
