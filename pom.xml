@@ -25,7 +25,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>12.0</version>
+            <version>13.0</version>
         </dependency>
         <dependency>
             <groupId>com.google.caliper</groupId>
@@ -34,4 +34,24 @@
             <scope>runtime</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <!-- mvn org.pitest:pitest-maven:mutationCoverage to run -->
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>0.28</version>
+                <configuration>
+                    <targetClasses>
+                        <param>com.mikea.concrete.*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>com.mikea.concrete.*Test</param>
+                    </targetTests>
+                    <threads>4</threads>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
