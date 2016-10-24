@@ -17,14 +17,6 @@ public class StackTest extends TestCase {
         assertEquals("[]", Iterables.toString(stack));
 
         assertNull(stack.peekFront());
-/*
-    try {
-      stack.peekFront();
-      fail();
-    } catch (NoSuchElementException e) {
-      // expected;
-    }
-*/
 
         try {
             stack.popFront();
