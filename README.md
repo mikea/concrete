@@ -1,13 +1,16 @@
-Concrete
-========
+# Concrete
+> Fully persistent data structures in Java.
 
-Fully persistent data structures in Java.
+
+[![CircleCI](https://img.shields.io/circleci/project/mikea/concrete.svg?style=flat)](https://circleci.com/gh/mikea/concrete)
+
+
 
 
 Stack
 ======
 
-    Stack<String> stack = Stack.newStack();
+    PStack<String> stack = PStack.newStack();
     stack = stack.push("a");
     assertEquals("a", stack.peek());
     stack = stack.pop();
