@@ -26,6 +26,7 @@ public interface PStack<T> extends PCollection<T>, Iterable<T> {
    */
   default PStack<T> append(final PStack<T> second) {
     if (isEmpty()) return second;
+    if (second.isEmpty()) return this;
     return new AppendedStack<>(this, second);
   }
 
@@ -33,7 +34,16 @@ public interface PStack<T> extends PCollection<T>, Iterable<T> {
    * Peeks the back of the stack. O(|N|).
    */
   default T peekBack() {
-    return reverse().peekFront();
+    PStack<T> stack = this;
+    while (!stack.isEmpty()) {
+      PStack<T> withoutFront = stack.popFront();
+      if (withoutFront.isEmpty()) {
+        return stack.peekFront();
+      }
+      stack = withoutFront;
+    }
+
+    return peekFront();
   }
 
   /**
