@@ -2,60 +2,58 @@ package com.mikea.concrete;
 
 import java.util.NoSuchElementException;
 
-import static com.mikea.concrete.Stack.newStack;
-import static com.mikea.concrete.Stacks.reverse;
+import static com.mikea.concrete.PStack.newStack;
 
 /**
  * Invariants:
- *   |head| <= C * |tail| + 1
- *   |tail| <= C * |head| + 1
+ *   |head| <= 2 * |tail| + 1
+ *   |tail| <= 2 * |head| + 1
  */
 public class AmortizedDeque<T> implements PDeque<T> {
-  private static final int C = 2;
-  final PStack<T> head;
-  final PStack<T> tail;
+  private final PStack<T> head;
+  private final PStack<T> tail;
 
   private AmortizedDeque(PStack<T> head, PStack<T> tail) {
     if (head.size() >= tail.size()) {
       this.head = head;
       this.tail = tail;
     } else {
-      this.head = Stacks.append(head, reverse(tail));
+      this.head = head.append(tail.reverse());
       this.tail = newStack();
     }
   }
 
   private AmortizedDeque() {
-    this(Stack.<T>newStack(), Stack.<T>newStack());
+    this(Stack.newStack(), Stack.newStack());
   }
 
   @Override
   public AmortizedDeque<T> pushFront(T value) {
-    return new AmortizedDeque<T>(head.pushFront(value), tail);
+    return new AmortizedDeque<>(head.pushFront(value), tail);
   }
 
   @Override
   public AmortizedDeque<T> popBack() {
     if (!tail.isEmpty()) {
-      return new AmortizedDeque<T>(head, tail.popFront());
+      return new AmortizedDeque<>(head, tail.popFront());
     } else if (head.isEmpty()) {
       throw new NoSuchElementException();
     } else {
-      return new AmortizedDeque<T>(Stacks.popBack(head), tail);
+      return new AmortizedDeque<>(head.popBack(), tail);
     }
   }
 
   @Override
   public T peekBack() {
     if (tail.isEmpty()) {
-      return Stacks.peekBack(head);
+      return head.peekBack();
     } else {
       return tail.peekFront();
     }
   }
 
   public static <T> AmortizedDeque<T> newAmortizedDeque() {
-    return new AmortizedDeque<T>();
+    return new AmortizedDeque<>();
   }
 
   @Override
@@ -78,7 +76,7 @@ public class AmortizedDeque<T> implements PDeque<T> {
    */
   @Override
   public AmortizedDeque<T> pushBack(T t) {
-    return new AmortizedDeque<T>(head, tail.pushFront(t));
+    return new AmortizedDeque<>(head, tail.pushFront(t));
   }
 
   /**
@@ -89,7 +87,7 @@ public class AmortizedDeque<T> implements PDeque<T> {
     if (isEmpty()) {
       throw new NoSuchElementException();
     }
-    return new AmortizedDeque<T>(head.popFront(), tail);
+    return new AmortizedDeque<>(head.popFront(), tail);
   }
 
   /**

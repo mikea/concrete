@@ -1,8 +1,9 @@
 package com.mikea.concrete.benchmarks;
 
+import com.google.caliper.BeforeExperiment;
+import com.google.caliper.Benchmark;
 import com.google.caliper.Param;
-import com.google.caliper.Runner;
-import com.google.caliper.SimpleBenchmark;
+import com.google.caliper.runner.CaliperMain;
 import com.mikea.concrete.AmortizedQueue;
 import com.mikea.concrete.RealtimeQueue;
 
@@ -16,7 +17,7 @@ import static com.google.common.collect.Lists.newLinkedList;
 import static com.mikea.concrete.AmortizedQueue.newAmortizedQueue;
 import static com.mikea.concrete.RealtimeQueue.newRealtimeQueue;
 
-public class QueueBenchmark extends SimpleBenchmark {
+public class QueueBenchmark {
   @Param
   private Test test;
 
@@ -29,12 +30,12 @@ public class QueueBenchmark extends SimpleBenchmark {
   private List<Op> ops;
 
 
-  @Override
+  @BeforeExperiment
   protected void setUp() throws Exception {
-    super.setUp();
     ops = test.createOps(length);
   }
 
+  @Benchmark
   public void time(int reps) {
     Object o = "foo";
     for (int i = 0; i < reps; ++i) {
@@ -158,6 +159,6 @@ public class QueueBenchmark extends SimpleBenchmark {
   }
 
   public static void main(String[] args) {
-    Runner.main(QueueBenchmark.class, args);
+    CaliperMain.main(QueueBenchmark.class, args);
   }
 }

@@ -1,8 +1,9 @@
 package com.mikea.concrete.benchmarks;
 
+import com.google.caliper.BeforeExperiment;
+import com.google.caliper.Benchmark;
 import com.google.caliper.Param;
-import com.google.caliper.Runner;
-import com.google.caliper.SimpleBenchmark;
+import com.google.caliper.runner.CaliperMain;
 import com.mikea.concrete.Stack;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.newLinkedList;
 import static com.mikea.concrete.Stack.newStack;
 
-public class StackBenchmark extends SimpleBenchmark {
+public class StackBenchmark {
   @Param
   private Test test;
 
@@ -25,13 +26,12 @@ public class StackBenchmark extends SimpleBenchmark {
   private Implementation implementation;
   private List<Op> ops;
 
-  @Override
+  @BeforeExperiment
   protected void setUp() throws Exception {
-    super.setUp();
-
     ops = test.createOps(length);
   }
 
+  @Benchmark
   public void time(int reps) {
     Object o = "foo";
     for (int i = 0; i < reps; ++i) {
@@ -159,6 +159,6 @@ public class StackBenchmark extends SimpleBenchmark {
   }
 
   public static void main(String[] args) {
-    Runner.main(StackBenchmark.class, args);
+    CaliperMain.main(StackBenchmark.class, args);
   }
 }

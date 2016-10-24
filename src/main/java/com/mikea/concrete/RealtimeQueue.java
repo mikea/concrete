@@ -50,7 +50,7 @@ public class RealtimeQueue<T> implements PQueue<T> {
   }
 
   private RealtimeQueue() {
-    this(Stack.<T>newStack(), Stack.<T>newStack(), null, null, null, null, 0);
+    this(Stack.newStack(), Stack.newStack(), null, null, null, null, 0);
   }
 
   @Override
@@ -73,8 +73,8 @@ public class RealtimeQueue<T> implements PQueue<T> {
       Stack<T> tailReverseFrom, Stack<T> tailReverseTo, Stack<T> headReverseFrom,
       Stack<T> headReverseTo, long headCopied) {
 
-    RealtimeQueue<T> result = new RealtimeQueue<T>(head, tail, tailReverseFrom,
-        tailReverseTo, headReverseFrom, headReverseTo, headCopied);
+    RealtimeQueue<T> result = new RealtimeQueue<>(head, tail, tailReverseFrom,
+            tailReverseTo, headReverseFrom, headReverseTo, headCopied);
 
     if (result.needsStep()) {
       result = step(result.head, result.tail, result.tailReverseFrom, result.tailReverseTo, result.headReverseFrom, result.headReverseTo, result.headCopied);
@@ -133,7 +133,7 @@ public class RealtimeQueue<T> implements PQueue<T> {
       }
     }
 
-    return new RealtimeQueue<T>(head, tail, tailReverseFrom, tailReverseTo, headReverseFrom, headReverseTo, headCopied);
+    return new RealtimeQueue<>(head, tail, tailReverseFrom, tailReverseTo, headReverseFrom, headReverseTo, headCopied);
   }
 
   @Override
@@ -161,10 +161,10 @@ public class RealtimeQueue<T> implements PQueue<T> {
 
   @Override
   public RealtimeQueue<T> clear() {
-    return new RealtimeQueue<T>();
+    return new RealtimeQueue<>();
   }
 
   public static <T> RealtimeQueue<T> newRealtimeQueue() {
-    return new RealtimeQueue<T>();
+    return new RealtimeQueue<>();
   }
 }

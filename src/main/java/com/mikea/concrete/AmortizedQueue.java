@@ -3,28 +3,27 @@ package com.mikea.concrete;
 import java.util.NoSuchElementException;
 
 import static com.mikea.concrete.Stack.newStack;
-import static com.mikea.concrete.Stacks.reverse;
 
 public class AmortizedQueue<T> implements PQueue<T> {
-  final PStack<T> head;
-  final PStack<T> tail;
+  private final PStack<T> head;
+  private final PStack<T> tail;
 
   private AmortizedQueue() {
-    this(Stack.<T>newStack(), Stack.<T>newStack());
+    this(PStack.newStack(), PStack.newStack());
   }
 
-  protected AmortizedQueue(PStack<T> head, PStack<T> tail) {
+  private AmortizedQueue(PStack<T> head, PStack<T> tail) {
     if (!head.isEmpty()) {
       this.head = head;
       this.tail = tail;
     } else {
-      this.head = reverse(tail);
+      this.head = tail.reverse();
       this.tail = newStack();
     }
   }
 
   public static <T> AmortizedQueue<T> newAmortizedQueue() {
-    return new AmortizedQueue<T>();
+    return new AmortizedQueue<>();
   }
 
   @Override
@@ -47,7 +46,7 @@ public class AmortizedQueue<T> implements PQueue<T> {
    */
   @Override
   public AmortizedQueue<T> pushBack(T t) {
-    return new AmortizedQueue<T>(head, tail.pushFront(t));
+    return new AmortizedQueue<>(head, tail.pushFront(t));
   }
 
   /**
@@ -58,7 +57,7 @@ public class AmortizedQueue<T> implements PQueue<T> {
     if (isEmpty()) {
       throw new NoSuchElementException();
     }
-    return new AmortizedQueue<T>(head.popFront(), tail);
+    return new AmortizedQueue<>(head.popFront(), tail);
   }
 
   /**

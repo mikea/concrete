@@ -118,7 +118,7 @@ public class StackTest extends TestCase {
         stack = stack.pushFront("e");
 
         assertEquals("[e, d, c, b, a]", Iterables.toString(stack));
-        assertEquals("[a, b, c, d, e]", Iterables.toString(Stacks.reverse(stack)));
+        assertEquals("[a, b, c, d, e]", Iterables.toString(stack.reverse()));
     }
 
     public void testClear() throws Exception {

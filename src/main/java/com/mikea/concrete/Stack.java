@@ -47,7 +47,7 @@ public class Stack<T> implements PStack<T>, Iterable<T> {
    */
   @Override
   public Stack<T> pushFront(T value) {
-    return new Stack<T>(value, this, size + 1);
+    return new Stack<>(value, this, size + 1);
   }
 
   /**
@@ -105,6 +105,6 @@ public class Stack<T> implements PStack<T>, Iterable<T> {
   }
 
   public static <T> Stack<T> newStack() {
-    return new Stack<T>();
+    return new Stack<>();
   }
 }
