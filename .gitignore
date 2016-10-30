@@ -1,5 +1,8 @@
-*.iml
-.idea/
-target/
+.gradle/
 build/
-
+.idea/
+classes/
+/bin/
+.project
+.classpath
+.settings
