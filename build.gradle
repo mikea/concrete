@@ -8,7 +8,7 @@ repositories {
 }
     
 dependencies {
-    compile 'com.google.guava:guava:19.0'
+    compile 'com.google.guava:guava:20.0'
     testCompile 'junit:junit:4.12'
     testCompile 'com.google.caliper:caliper:1.0-beta-2'
 }
