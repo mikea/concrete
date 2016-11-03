@@ -7,7 +7,7 @@
 
 
 
-Stack
+PStack
 ======
 
     PStack<String> stack = PStack.newStack();
