@@ -1,3 +1,7 @@
+dependencies:
+  post:
+    - ./gradlew dependencyUpdates -Drevision=release
+
 test:
   post:
     - ./gradlew pitest
