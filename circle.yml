@@ -2,6 +2,7 @@ test:
   post:
     - ./gradlew pitest
     # copy all reports
+    - find . -name "pitest"
     - mkdir -p $CIRCLE_TEST_REPORTS/pitest/
     - cp -R build/report/pitest/ $CIRCLE_TEST_REPORTS/pitest/
     - mkdir -p $CIRCLE_TEST_REPORTS/junit/
