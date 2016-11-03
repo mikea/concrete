@@ -3,6 +3,7 @@ package com.mikea.concrete.benchmarks;
 import com.google.caliper.BeforeExperiment;
 import com.google.caliper.Benchmark;
 import com.google.caliper.Param;
+import com.google.caliper.api.VmOptions;
 import com.google.caliper.runner.CaliperMain;
 import com.mikea.concrete.AmortizedQueue;
 import com.mikea.concrete.RealtimeQueue;
@@ -17,11 +18,13 @@ import static com.google.common.collect.Lists.newLinkedList;
 import static com.mikea.concrete.AmortizedQueue.newAmortizedQueue;
 import static com.mikea.concrete.RealtimeQueue.newRealtimeQueue;
 
+// bug in caliper: https://stackoverflow.com/questions/29199509/caliper-error-cicompilercount-of-1-is-invalid-must-be-at-least-2
+@VmOptions("-XX:-TieredCompilation")
 public class QueueBenchmark {
   @Param
   private Test test;
 
-  @Param({"10", "100", "1000", "10000"})
+  @Param({"1", "4", "16", "64", "256"})
   private int length;
 
   @Param
