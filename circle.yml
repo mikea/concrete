@@ -5,8 +5,7 @@ dependencies:
 test:
   post:
     - ./gradlew pitest
-    # copy all reports
-    - find . -name "pitest"
+    # copy all reports to circleci
     - mkdir -p $CIRCLE_TEST_REPORTS/pitest/
     - cp -R ./build/reports/pitest/ $CIRCLE_TEST_REPORTS/pitest/
     - mkdir -p $CIRCLE_TEST_REPORTS/junit/
