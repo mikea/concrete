@@ -4,19 +4,15 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 import static com.mikea.concrete.AmortizedDeque.newAmortizedDeque;
+import static org.junit.Assert.assertEquals;
 
 public class AmortizedDequeTest extends QueueTestCase<AmortizedDeque<String>>  {
-
-  public void testBackOperations() throws Exception {
-    AmortizedDeque<String> deque = newDeque();
-  }
-
   @Override
   protected AmortizedDeque<String> newQueue() {
     return newDeque();
   }
 
-  protected AmortizedDeque<String> newDeque() {
+  private AmortizedDeque<String> newDeque() {
     return newAmortizedDeque();
   }
 

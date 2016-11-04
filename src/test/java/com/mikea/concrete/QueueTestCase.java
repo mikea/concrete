@@ -1,34 +1,55 @@
 package com.mikea.concrete;
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.*;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static org.junit.Assert.*;
 
-public abstract class QueueTestCase<Q extends PQueue<String>> extends TestCase {
+public abstract class QueueTestCase<Q extends PQueue<String>> {
 
   protected abstract Q newQueue();
 
+  @Test
   public void testEmptyQueue() throws Exception {
     Q queue = newQueue();
     assertTrue(queue.isEmpty());
+    assertEquals(0, queue.size());
   }
 
+  @Test
   public void testPush() throws Exception {
     PQueue<String> queue = newQueue();
+    assertEquals(0, queue.size());
     queue = queue.pushBack("a");
+    assertEquals(1, queue.size());
     assertFalse(queue.isEmpty());
     queue = queue.pushBack("b");
+    assertEquals(2, queue.size());
     assertFalse(queue.isEmpty());
     queue = queue.pushBack("c");
+    assertEquals(3, queue.size());
     assertFalse(queue.isEmpty());
     queue = queue.pushBack("d");
+    assertEquals(4, queue.size());
     assertFalse(queue.isEmpty());
     queue = queue.pushBack("e");
+    assertEquals(5, queue.size());
     assertFalse(queue.isEmpty());
   }
 
+  @Test
+  public void testClear() throws Exception {
+    PQueue<String> queue = newQueue().pushBackAll("a", "b", "c");
+    assertEquals(3, queue.size());
+    queue = queue.clear();
+    assertEquals(0, queue.size());
+    assertTrue(queue.isEmpty());
+  }
+
+  @Test
   public void testPushPopPeek() throws Exception {
     PQueue<String> queue = newQueue();
 
@@ -89,6 +110,7 @@ public abstract class QueueTestCase<Q extends PQueue<String>> extends TestCase {
     }
   }
 
+  @Test
   public void testSequence1() throws Exception {
     PQueue<String> queue = newQueue();
 
@@ -112,6 +134,7 @@ public abstract class QueueTestCase<Q extends PQueue<String>> extends TestCase {
     assertEquals("3", queue.peekFront());
   }
 
+  @Test
   public void testRandomOperations() throws Exception {
     compareQueues(newQueue(), new LinkedList<String>());
   }

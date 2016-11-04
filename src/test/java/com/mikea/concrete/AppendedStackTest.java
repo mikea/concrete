@@ -13,6 +13,10 @@ public class AppendedStackTest {
 
         assertEquals("[1, 2, 3, 4, 5, 6]", s.toString());
         assertEquals(6, s.size());
+
+        s = s.append(PStack.newStack());
+        assertEquals("[1, 2, 3, 4, 5, 6]", s.toString());
+        assertEquals(6, s.size());
     }
 
     @Test

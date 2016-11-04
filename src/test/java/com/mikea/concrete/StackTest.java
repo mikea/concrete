@@ -1,8 +1,6 @@
 package com.mikea.concrete;
 
 import com.google.common.collect.Iterables;
-
-import junit.framework.TestCase;
 import org.junit.Test;
 
 import java.util.Iterator;

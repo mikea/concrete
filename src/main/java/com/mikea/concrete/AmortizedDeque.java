@@ -1,5 +1,7 @@
 package com.mikea.concrete;
 
+import com.google.common.collect.Iterables;
+
 import java.util.NoSuchElementException;
 
 import static com.mikea.concrete.PStack.newStack;

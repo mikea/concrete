@@ -17,7 +17,7 @@ public class RealtimeQueue<T> implements PQueue<T> {
   private final long headCopied;
 
   private RealtimeQueue(Stack<T> head, Stack<T> tail, Stack<T> tailReverseFrom,
-      Stack<T> tailReverseTo, Stack<T> headReverseFrom, Stack<T> headReverseTo, long headCopied) {
+                        Stack<T> tailReverseTo, Stack<T> headReverseFrom, Stack<T> headReverseTo, long headCopied) {
     if (tail.size() > head.size()) {
       assertEmptyReverseStacks(headReverseFrom, headReverseTo, tailReverseFrom, tailReverseTo);
       if (tail.size() == 1) {
@@ -70,11 +70,11 @@ public class RealtimeQueue<T> implements PQueue<T> {
   }
 
   private static <T> RealtimeQueue<T> newQueue(Stack<T> head, Stack<T> tail,
-      Stack<T> tailReverseFrom, Stack<T> tailReverseTo, Stack<T> headReverseFrom,
-      Stack<T> headReverseTo, long headCopied) {
+                                               Stack<T> tailReverseFrom, Stack<T> tailReverseTo, Stack<T> headReverseFrom,
+                                               Stack<T> headReverseTo, long headCopied) {
 
     RealtimeQueue<T> result = new RealtimeQueue<>(head, tail, tailReverseFrom,
-            tailReverseTo, headReverseFrom, headReverseTo, headCopied);
+        tailReverseTo, headReverseFrom, headReverseTo, headCopied);
 
     if (result.needsStep()) {
       result = step(result.head, result.tail, result.tailReverseFrom, result.tailReverseTo, result.headReverseFrom, result.headReverseTo, result.headCopied);
@@ -93,11 +93,11 @@ public class RealtimeQueue<T> implements PQueue<T> {
   }
 
   private static <T> RealtimeQueue<T> step(Stack<T> head, Stack<T> tail, Stack<T> tailReverseFrom,
-      Stack<T> tailReverseTo, Stack<T> headReverseFrom, Stack<T> headReverseTo, long headCopied) {
+                                           Stack<T> tailReverseTo, Stack<T> headReverseFrom, Stack<T> headReverseTo, long headCopied) {
     if (tailReverseFrom == null || tailReverseTo == null || headReverseFrom == null || headReverseTo == null) {
       throw new IllegalStateException("Internal error: invariant failure.");
     }
-    
+
     if (!tailReverseFrom.isEmpty()) {
       tailReverseTo = tailReverseTo.pushFront(tailReverseFrom.peekFront());
       tailReverseFrom = tailReverseFrom.popFront();
@@ -146,7 +146,7 @@ public class RealtimeQueue<T> implements PQueue<T> {
   }
 
   private static <T> void assertEmptyReverseStacks(Stack<T> headReverseFrom, Stack<T> headReverseTo,
-      Stack<T> tailReverseFrom, Stack<T> tailReverseTo) {
+                                                   Stack<T> tailReverseFrom, Stack<T> tailReverseTo) {
     if (tailReverseFrom != null || tailReverseTo != null || headReverseFrom != null || headReverseTo
         != null) {
       throw new IllegalStateException("Internal error: invariant failure.");
@@ -155,14 +155,18 @@ public class RealtimeQueue<T> implements PQueue<T> {
 
   @Override
   public int size() {
-    throw new UnsupportedOperationException(
-        "size is not implemented in com.mikea.concrete.RealtimeQueue");
+    int size = head.size() + tail.size();
+    if (headReverseTo != null) {
+       size += headReverseTo.size() + headReverseFrom.size();
+    }
+    if (tailReverseTo != null) {
+      size += tailReverseTo.size() + tailReverseFrom.size();
+    }
+    return size;
   }
 
   @Override
-  public RealtimeQueue<T> clear() {
-    return new RealtimeQueue<>();
-  }
+  public RealtimeQueue<T> clear() { return new RealtimeQueue<>(); }
 
   public static <T> RealtimeQueue<T> newRealtimeQueue() {
     return new RealtimeQueue<>();
