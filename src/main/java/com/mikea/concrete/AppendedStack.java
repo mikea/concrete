@@ -1,6 +1,5 @@
 package com.mikea.concrete;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 
@@ -16,7 +15,7 @@ class AppendedStack<T> implements PStack<T> {
   private final PStack<T> right;
 
   AppendedStack(PStack<T> left, PStack<T> right) {
-    Preconditions.checkArgument(!left.isEmpty());
+    assert !left.isEmpty();
     this.left = left;
     this.right = right;
   }
