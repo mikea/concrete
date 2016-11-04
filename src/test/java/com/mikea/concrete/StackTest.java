@@ -3,14 +3,17 @@ package com.mikea.concrete;
 import com.google.common.collect.Iterables;
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static com.mikea.concrete.Stack.newStack;
+import static org.junit.Assert.*;
 
-public class StackTest extends TestCase {
+public class StackTest {
 
+    @Test
     public void testEmptyStack() throws Exception {
         Stack<String> stack = newStack();
         assertTrue(stack.isEmpty());
@@ -26,6 +29,7 @@ public class StackTest extends TestCase {
         }
     }
 
+    @Test
     public void testIterator() throws Exception {
         Stack<String> stack = newStack();
         stack = stack.pushFront("a");
@@ -38,6 +42,7 @@ public class StackTest extends TestCase {
         assertEquals("[e, d, c, b, a]", Iterables.toString(stack));
     }
 
+    @Test
     public void testPopAndPeek() throws Exception {
         Stack<String> stack = newStack();
         assertTrue(stack.isEmpty());
@@ -82,6 +87,7 @@ public class StackTest extends TestCase {
         assertTrue(stack.isEmpty());
     }
 
+    @Test
     public void testEmptyStackIterator() throws Exception {
         Stack<String> stack = newStack();
         Iterator<String> iterator = stack.iterator();
@@ -101,6 +107,7 @@ public class StackTest extends TestCase {
         }
     }
 
+    @Test
     public void testReverse() throws Exception {
         Stack<String> stack = newStack();
         stack = stack.pushFront("a");
@@ -113,6 +120,7 @@ public class StackTest extends TestCase {
         assertEquals("[a, b, c, d, e]", Iterables.toString(stack.reverse()));
     }
 
+    @Test
     public void testClear() throws Exception {
         Stack<String> stack = newStack();
         stack = stack.pushFront("a");
@@ -123,6 +131,7 @@ public class StackTest extends TestCase {
         assertTrue(stack.isEmpty());
     }
 
+    @Test
     public void testToString() throws Exception {
         Stack<String> stack = newStack();
         stack = stack.pushFront("a");

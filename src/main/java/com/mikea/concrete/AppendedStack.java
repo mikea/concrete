@@ -1,6 +1,7 @@
 package com.mikea.concrete;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 
 import java.util.Iterator;
@@ -22,7 +23,7 @@ class AppendedStack<T> implements PStack<T> {
 
   @Override
   public PStack<T> pushFront(T value) {
-    return new AppendedStack<T>(left.pushFront(value), right);
+    return new AppendedStack<>(left.pushFront(value), right);
   }
 
   @Override
@@ -34,7 +35,7 @@ class AppendedStack<T> implements PStack<T> {
   public PStack<T> popFront() {
     PStack<T> newLeft = left.popFront();
     if (!newLeft.isEmpty()) {
-      return new AppendedStack<T>(newLeft, right);
+      return new AppendedStack<>(newLeft, right);
     } else {
       return right;
     }
@@ -56,7 +57,12 @@ class AppendedStack<T> implements PStack<T> {
   }
 
   @Override
-  public PCollection<T> clear() {
+  public PStack<T> clear() {
     return left.clear();
+  }
+
+  @Override
+  public String toString() {
+    return Iterables.toString(this);
   }
 }
