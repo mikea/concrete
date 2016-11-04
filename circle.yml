@@ -4,9 +4,8 @@ dependencies:
 
 test:
   post:
-    - ./gradlew pitest
-    # copy all reports to circleci
     - mkdir -p $CIRCLE_TEST_REPORTS/pitest/
-    - cp -R ./build/reports/pitest/ $CIRCLE_TEST_REPORTS/pitest/
+    - ./gradlew pitest -Doverride.pitest.reportDir=$CIRCLE_TEST_REPORTS/pitest/
+    # copy all reports
     - mkdir -p $CIRCLE_TEST_REPORTS/junit/
     - find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
