@@ -18,7 +18,7 @@ stack = stack.popFront();
 assertTrue(stack.isEmpty());
 ```
 
-`PStack` runtime performanse is always better than `ArrayList` and `LinkedList` (ignoring GC overhead): 
+PStack runtime performanse is always better than ArrayList and LinkedList (ignoring GC overhead): 
 [benchmark report](https://microbenchmarks.appspot.com/runs/eba86353-07d3-4db3-87e5-875ec5d373eb#r:scenario.benchmarkSpec.parameters.implementation&c:scenario.benchmarkSpec.parameters.test,scenario.benchmarkSpec.parameters.length),
 [code](https://github.com/mikea/concrete/blob/master/src/test/java/com/mikea/concrete/benchmarks/StackBenchmark.java).
 
