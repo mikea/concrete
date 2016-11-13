@@ -1,6 +1,9 @@
-package com.mikea.concrete;
+package com.mikea.concrete.impl;
 
-import static com.mikea.concrete.Stack.newStack;
+import com.google.common.collect.Iterables;
+import com.mikea.concrete.PQueue;
+
+import static com.mikea.concrete.impl.Stack.newStack;
 
 /**
  * Real-time queue operation as described in "Real Time Queue Operations in Pure LISP" by
@@ -22,19 +25,19 @@ public class RealtimeQueue<T> implements PQueue<T> {
       assertEmptyReverseStacks(headReverseFrom, headReverseTo, tailReverseFrom, tailReverseTo);
       if (tail.size() == 1) {
         this.head = tail;
-        this.tail = newStack();
+        this.tail = Stack.newStack();
         this.tailReverseFrom = null;
         this.tailReverseTo = null;
         this.headReverseFrom = null;
         this.headReverseTo = null;
       } else {
         this.head = head;
-        this.tail = newStack();
+        this.tail = Stack.newStack();
 
         this.tailReverseFrom = tail;
-        this.tailReverseTo = newStack();
+        this.tailReverseTo = Stack.newStack();
         this.headReverseFrom = head;
-        this.headReverseTo = newStack();
+        this.headReverseTo = Stack.newStack();
       }
     } else {
       this.head = head;
@@ -170,5 +173,11 @@ public class RealtimeQueue<T> implements PQueue<T> {
 
   public static <T> RealtimeQueue<T> newRealtimeQueue() {
     return new RealtimeQueue<>();
+  }
+
+
+  @Override
+  public String toString() {
+    return Iterables.toString(this);
   }
 }

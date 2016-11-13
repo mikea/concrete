@@ -1,5 +1,8 @@
 package com.mikea.concrete;
 
+import com.mikea.concrete.impl.AppendedStack;
+import com.mikea.concrete.impl.Stack;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,9 +23,7 @@ public interface PStack<T> extends PCollection<T>, Iterable<T> {
    * Appends second to first. Back of second will become back of result. O(1).
    */
   default PStack<T> append(final PStack<T> second) {
-    if (isEmpty()) return second;
-    if (second.isEmpty()) return this;
-    return new AppendedStack<>(this, second);
+    return AppendedStack.append(this, second);
   }
 
   /**

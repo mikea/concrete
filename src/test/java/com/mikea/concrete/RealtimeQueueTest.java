@@ -1,6 +1,8 @@
 package com.mikea.concrete;
 
-import static com.mikea.concrete.RealtimeQueue.newRealtimeQueue;
+import com.mikea.concrete.impl.RealtimeQueue;
+
+import static com.mikea.concrete.impl.RealtimeQueue.newRealtimeQueue;
 
 public class RealtimeQueueTest extends QueueTestCase<RealtimeQueue<String>> {
 

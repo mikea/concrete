@@ -1,12 +1,13 @@
 package com.mikea.concrete;
 
 import com.google.common.collect.Iterables;
+import com.mikea.concrete.impl.Stack;
 import org.junit.Test;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import static com.mikea.concrete.Stack.newStack;
+import static com.mikea.concrete.impl.Stack.newStack;
 import static org.junit.Assert.*;
 
 public class StackTest {

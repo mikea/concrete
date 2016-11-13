@@ -1,23 +1,30 @@
-package com.mikea.concrete;
+package com.mikea.concrete.impl;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
+import com.mikea.concrete.PStack;
 
 import java.util.Iterator;
 
 /**
  * Stack implementation that appends to other stacks together.
- *
+ * <p>
  * Invariant: |left| > 0.
  */
-class AppendedStack<T> implements PStack<T> {
+public class AppendedStack<T> implements PStack<T> {
   private final PStack<T> left;
   private final PStack<T> right;
 
-  AppendedStack(PStack<T> left, PStack<T> right) {
+  private AppendedStack(PStack<T> left, PStack<T> right) {
     assert !left.isEmpty();
     this.left = left;
     this.right = right;
+  }
+
+  public static <T> PStack<T> append(PStack<T> left, PStack<T> right) {
+    if (left.isEmpty()) return right;
+    if (right.isEmpty()) return left;
+    return new AppendedStack<>(left, right);
   }
 
   @Override

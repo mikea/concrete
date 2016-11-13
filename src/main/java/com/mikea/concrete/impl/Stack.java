@@ -1,6 +1,7 @@
-package com.mikea.concrete;
+package com.mikea.concrete.impl;
 
 import com.google.common.collect.Iterables;
+import com.mikea.concrete.PStack;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

@@ -1,9 +1,11 @@
 package com.mikea.concrete;
 
+import com.mikea.concrete.impl.AmortizedDeque;
+
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
-import static com.mikea.concrete.AmortizedDeque.newAmortizedDeque;
+import static com.mikea.concrete.impl.AmortizedDeque.newAmortizedDeque;
 import static org.junit.Assert.assertEquals;
 
 public class AmortizedDequeTest extends QueueTestCase<AmortizedDeque<String>>  {

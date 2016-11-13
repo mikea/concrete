@@ -1,10 +1,14 @@
-package com.mikea.concrete;
+package com.mikea.concrete.impl;
+
+import com.google.common.collect.Iterables;
+import com.mikea.concrete.PQueue;
+import com.mikea.concrete.PStack;
 
 import java.util.NoSuchElementException;
 
-import static com.mikea.concrete.Stack.newStack;
+import static com.mikea.concrete.impl.Stack.newStack;
 
-public class AmortizedQueue<T> implements PQueue<T> {
+public class AmortizedQueue<T> implements PQueue<T>, Iterable<T> {
   private final PStack<T> head;
   private final PStack<T> tail;
 
@@ -18,7 +22,7 @@ public class AmortizedQueue<T> implements PQueue<T> {
       this.tail = tail;
     } else {
       this.head = tail.reverse();
-      this.tail = newStack();
+      this.tail = Stack.newStack();
     }
   }
 
@@ -69,5 +73,10 @@ public class AmortizedQueue<T> implements PQueue<T> {
       return null;
     }
     return head.peekFront();
+  }
+
+  @Override
+  public String toString() {
+    return Iterables.toString(this);
   }
 }
