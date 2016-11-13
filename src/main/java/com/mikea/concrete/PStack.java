@@ -17,7 +17,7 @@ public interface PStack<T> extends PCollection<T>, Iterable<T> {
   @SafeVarargs
   static <T> PStack<T> newStack(T...items) {
     List<T> itemsList = Arrays.asList(items);
-    return Stack.<T>newStack().pushAll(itemsList); }
+    return Stack.<T>newStack().pushBackAll(itemsList); }
 
   /**
    * Appends second to first. Back of second will become back of result. O(1).
@@ -40,19 +40,25 @@ public interface PStack<T> extends PCollection<T>, Iterable<T> {
     return result;
   }
 
-  default PStack<T> pushAll(Iterable<T> i) {
+  default PStack<T> pushBackAll(Iterable<T> i) {
     PStack<T> stack = this;
     for (T t : i) {
       stack = stack.pushFront(t);
     }
-
     return stack.reverse();
+  }
+
+  /**
+   * Pops one element from the back of the stack. O(|N|).
+   */
+  default PStack<T> popBack() {
+    return reverse().popFront().reverse();
   }
 
   /**
    * Peeks the back of the stack. O(|N|).
    */
-  default T peekBack_slow() {
+  default T peekBack() {
     PStack<T> stack = this;
     while (!stack.isEmpty()) {
       PStack<T> withoutFront = stack.popFront();
@@ -63,12 +69,5 @@ public interface PStack<T> extends PCollection<T>, Iterable<T> {
     }
 
     return peekFront();
-  }
-
-  /**
-   * Pops one element from the back of the stack. O(|N|).
-   */
-  default PStack<T> popBack_slow() {
-    return reverse().popFront().reverse();
   }
 }

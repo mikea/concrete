@@ -7,8 +7,8 @@
 
 Implementation follows "Purely Functional Data Structures" by Chris Okasaki unless said otherwise.
 
-PStack
-======
+## PStack
+
 
 ```java
 PStack<String> stack = PStack.newStack();
@@ -30,10 +30,9 @@ PStack<String> stack2 = PStack.newStack("c", "d");
 assertEquals("[a, b, c, d]", stack1.append(stack2).toString());
 ```
 
-Queue
-======
+## Queue
 
-Amortized queue with [amortized](https://en.wikipedia.org/wiki/Amortized_analysis) O(1) performance:
+Queue with [amortized](https://en.wikipedia.org/wiki/Amortized_analysis) O(1) performance:
  
 ```java
 PQueue<String> queue = PQueue.newAmortizedQueue();
@@ -57,4 +56,16 @@ queue = queue.popFront();
 assertEquals("b", queue.peekFront());
 queue = queue.popFront();
 assertEquals("[c]", queue.toString());
+```
+
+## Deque
+
+Deque with [amortized](https://en.wikipedia.org/wiki/Amortized_analysis) O(1) performance:
+
+```java
+PDeque<String> deque = PDeque.newAmortizedDeque();
+deque = deque.pushBackAll("b", "c");
+deque = deque.pushFront("a");
+deque = deque.popBack();
+assertEquals("[a, b]", deque.toString());
 ```

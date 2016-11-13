@@ -48,4 +48,13 @@ public class ExamplesTest {
         queue = queue.popFront();
         assertEquals("[c]", queue.toString());
     }
+
+    @Test
+    public void amortizedDeque() {
+        PDeque<String> deque = PDeque.newAmortizedDeque();
+        deque = deque.pushBackAll("b", "c");
+        deque = deque.pushFront("a");
+        deque = deque.popBack();
+        assertEquals("[a, b]", deque.toString());
+    }
 }

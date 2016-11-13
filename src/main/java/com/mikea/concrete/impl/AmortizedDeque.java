@@ -1,5 +1,6 @@
 package com.mikea.concrete.impl;
 
+import com.google.common.collect.Iterables;
 import com.mikea.concrete.PDeque;
 import com.mikea.concrete.PStack;
 
@@ -42,14 +43,14 @@ public class AmortizedDeque<T> implements PDeque<T> {
     } else if (head.isEmpty()) {
       throw new NoSuchElementException();
     } else {
-      return new AmortizedDeque<>(head.popBack_slow(), tail);
+      return new AmortizedDeque<>(head.popBack(), tail);
     }
   }
 
   @Override
   public T peekBack() {
     if (tail.isEmpty()) {
-      return head.peekBack_slow();
+      return head.peekBack();
     } else {
       return tail.peekFront();
     }
@@ -102,5 +103,10 @@ public class AmortizedDeque<T> implements PDeque<T> {
       return null;
     }
     return head.peekFront();
+  }
+
+  @Override
+  public String toString() {
+    return Iterables.toString(this);
   }
 }
