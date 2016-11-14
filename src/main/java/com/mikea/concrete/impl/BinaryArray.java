@@ -89,8 +89,8 @@ public class BinaryArray<T> implements PArray<T> {
 
   @Override
   public T get(int index) {
-    if (index >= size()) {
-      throw new NoSuchElementException();
+    if (index >= size() || index < 0) {
+      throw new IndexOutOfBoundsException();
     }
 
     return lookup(nodes, index);

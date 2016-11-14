@@ -170,15 +170,21 @@ public abstract class PStackTestCase {
   @Test
   public void testSize() throws Exception {
     PStack<String> stack = newStack();
-    stack = stack.pushFront("a");
-    assertEquals(1, stack.size());
-    stack = stack.pushFront("b");
-    assertEquals(2, stack.size());
-    stack = stack.popFront();
-    assertEquals(1, stack.size());
+
+    for (int i = 0; i < 100; ++i) {
+      assertEquals(i, stack.size());
+      stack = stack.pushFront(String.valueOf(i));
+    }
+
+    assertEquals(100, stack.size());
+    for (int i = 0; i < 100; ++i) {
+      assertEquals(100 - i, stack.size());
+      stack = stack.popFront();
+    }
 
     stack = stack.clear();
     assertTrue(stack.isEmpty());
+    assertEquals(0, stack.size());
   }
 
   @Test

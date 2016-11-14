@@ -33,8 +33,10 @@ dependencies {
 }
 
 pitest {
-    targetClasses = ['com.mikea.concrete.*']
+    targetClasses = [ 'com.mikea.concrete.*' ]
+    // ignore randomized test: everything has to be well covered by deterministic tests
     targetTests = [ '~^.*(?<!RandomizedTest)$' ]
+    excludedMethods = [ 'toString' ]
     outputFormats = ['XML', 'HTML']
 //    verbose = true
 }

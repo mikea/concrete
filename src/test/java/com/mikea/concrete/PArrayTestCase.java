@@ -2,8 +2,6 @@ package com.mikea.concrete;
 
 import org.junit.Test;
 
-import java.util.NoSuchElementException;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -22,7 +20,7 @@ public abstract class PArrayTestCase extends PStackTestCase {
     try {
       array.get(0);
       fail();
-    } catch (NoSuchElementException ignored) {
+    } catch (IndexOutOfBoundsException ignored) {
     }
 
     array = array.pushFrontAll("a", "b", "c");
@@ -30,7 +28,38 @@ public abstract class PArrayTestCase extends PStackTestCase {
     try {
       array.get(3);
       fail();
-    } catch (NoSuchElementException ignored) {
+    } catch (IndexOutOfBoundsException ignored) {
+    }
+
+    try {
+      array.get(-1);
+      fail();
+    } catch (IndexOutOfBoundsException ignored) {
+    }
+  }
+
+  @Test
+  public void testSetBeyond() {
+    PArray<String> array = newArray();
+
+    try {
+      array.set(0, "a");
+      fail();
+    } catch (IndexOutOfBoundsException ignored) {
+    }
+
+    array = array.pushFrontAll("a", "b", "c");
+
+    try {
+      array.set(3, " ");
+      fail();
+    } catch (IndexOutOfBoundsException ignored) {
+    }
+
+    try {
+      array.set(-1, "a");
+      fail();
+    } catch (IndexOutOfBoundsException ignored) {
     }
   }
 
