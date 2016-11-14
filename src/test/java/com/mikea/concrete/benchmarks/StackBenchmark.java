@@ -5,7 +5,7 @@ import com.google.caliper.Benchmark;
 import com.google.caliper.Param;
 import com.google.caliper.api.VmOptions;
 import com.google.caliper.runner.CaliperMain;
-import com.mikea.concrete.impl.Stack;
+import com.mikea.concrete.PStack;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -40,7 +40,7 @@ public class StackBenchmark {
     for (int i = 0; i < reps; ++i) {
       ArrayList<Object> arrayList = newArrayList();
       LinkedList<Object> linkedList = newLinkedList();
-      Stack<Object> stack = newStack();
+      PStack<Object> stack = newStack();
 
       for (Op op : ops) {
         switch (op) {

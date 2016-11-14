@@ -3,21 +3,34 @@ package com.mikea.concrete;
 import com.mikea.concrete.impl.AppendedStack;
 import com.mikea.concrete.impl.Stack;
 
-import java.util.Arrays;
-import java.util.List;
-
-public interface PStack<T> extends PCollection<T>, Iterable<T> {
-  PStack<T> pushFront(T value);
+public interface PStack<T> extends PCollection<T>, PIterable<T> {
   T peekFront();
+
   PStack<T> popFront();
+
+  PStack<T> pushFront(T value);
+
   PStack<T> clear();
 
-  static <T> PStack<T> newStack() { return Stack.newStack(); }
+  static <T> PStack<T> newStack() {
+    return Stack.newStack();
+  }
 
   @SafeVarargs
-  static <T> PStack<T> newStack(T...items) {
-    List<T> itemsList = Arrays.asList(items);
-    return Stack.<T>newStack().pushBackAll(itemsList); }
+  static <T> PStack<T> newStack(T... items) {
+    PStack<T> stack = newStack();
+    return stack.pushFrontAll(items);
+  }
+
+  default PStack<T> pushFrontAll(T... items) {
+    PStack<T> stack = this;
+    for (int i = items.length - 1; i >= 0; i--) {
+      T item = items[i];
+      stack = stack.pushFront(item);
+    }
+    return stack;
+  }
+
 
   /**
    * Appends second to first. Back of second will become back of result. O(1).
@@ -40,34 +53,10 @@ public interface PStack<T> extends PCollection<T>, Iterable<T> {
     return result;
   }
 
-  default PStack<T> pushBackAll(Iterable<T> i) {
-    PStack<T> stack = this;
-    for (T t : i) {
-      stack = stack.pushFront(t);
-    }
-    return stack.reverse();
-  }
-
   /**
    * Pops one element from the back of the stack. O(|N|).
    */
   default PStack<T> popBack() {
     return reverse().popFront().reverse();
-  }
-
-  /**
-   * Peeks the back of the stack. O(|N|).
-   */
-  default T peekBack() {
-    PStack<T> stack = this;
-    while (!stack.isEmpty()) {
-      PStack<T> withoutFront = stack.popFront();
-      if (withoutFront.isEmpty()) {
-        return stack.peekFront();
-      }
-      stack = withoutFront;
-    }
-
-    return peekFront();
   }
 }
