@@ -8,7 +8,7 @@ public interface PIterable<T> extends Iterable<T> {
 
   T peekFront();
 
-  PIterable<T> popFront();
+  PIterable<T> popFront() throws NoSuchElementException;
 
   @Override
   default Iterator<T> iterator() {

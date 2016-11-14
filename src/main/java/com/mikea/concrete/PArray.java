@@ -2,6 +2,8 @@ package com.mikea.concrete;
 
 import com.mikea.concrete.impl.BinaryArray;
 
+import java.util.NoSuchElementException;
+
 public interface PArray<T> extends PStack<T> {
   @Override
   PArray<T> clear();
@@ -9,10 +11,11 @@ public interface PArray<T> extends PStack<T> {
   @Override
   PArray<T> pushFront(T t);
   @Override
-  PArray<T> popFront();
+  PArray<T> popFront() throws NoSuchElementException;
 
   T get(int index);
-  PArray<T> set(int index, T t);
+
+  PArray<T> set(int index, T t) throws NoSuchElementException;
 
   static PArray<String> newBinaryArray() {
     return BinaryArray.newBinaryArray();

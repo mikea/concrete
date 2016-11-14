@@ -157,13 +157,11 @@ public class RealtimeQueue<T> implements PQueue<T> {
 
   @Override
   public int size() {
-    int size = head.size() + tail.size();
-    if (headReverseTo != null) {
-       size += headReverseTo.size() + headReverseFrom.size();
-    }
+    int size = (int) (head.size() + tail.size() - headCopied);
     if (tailReverseTo != null) {
       size += tailReverseTo.size() + tailReverseFrom.size();
     }
+
     return size;
   }
 

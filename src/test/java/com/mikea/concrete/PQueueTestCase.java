@@ -2,17 +2,13 @@ package com.mikea.concrete;
 
 import org.junit.Test;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Random;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.Assert.*;
 
-public abstract class PQueueTestCase<Q extends PQueue<String>> {
+public abstract class PQueueTestCase {
 
-  protected abstract Q newQueue();
+  protected abstract PQueue<String> newQueue();
 
   @Test
   public void testEmptyQueue() throws Exception {
@@ -137,83 +133,19 @@ public abstract class PQueueTestCase<Q extends PQueue<String>> {
   }
 
   @Test
-  public void testRandomOperations() throws Exception {
-    compareQueues(newQueue(), new LinkedList<String>());
-  }
+  public void testSize() throws Exception {
+    PQueue<String> queue = newQueue();
 
-  protected void compareQueues(PQueue<String> queue1, LinkedList<String> queue2) {
-    List<Op> ops = newArrayList();
-    Random random = new Random();
-
-    for (int iteration = 0; iteration < 10000; ++iteration) {
-      Op op = createRandomOp(random.nextInt(getNumberOfOps()), iteration);
-      ops.add(op);
-
-      queue1 = op.run(queue1, queue2);
-      assertSameState(queue1, queue2);
-    }
-  }
-
-  protected int getNumberOfOps() {
-    return 2;
-  }
-
-  protected void assertSameState(PQueue<String> queue1, LinkedList<String> queue2) {
-    assertEquals(queue2.isEmpty(), queue1.isEmpty());
-    assertEquals(queue2.peekFirst(), queue1.peekFront());
-  }
-
-  protected Op createRandomOp(int rnd, final int iteration) {
-    switch (rnd) {
-      case 0: {
-        return new Op() {
-          @Override
-          public String toString() {
-            return "pushBack(" + iteration + ")";
-          }
-
-          @Override
-          public PQueue<String> run(PQueue<String> queue1, LinkedList<String> queue2) {
-            queue2.add(String.valueOf(iteration));
-            return queue1.pushBack(String.valueOf(iteration));
-          }
-        };
-      }
-
-      case 1: {
-        return new Op() {
-          @Override
-          public PQueue<String> run(PQueue<String> queue1, LinkedList<String> queue2) {
-            boolean noSuchElementException1 = false;
-            boolean noSuchElementException2 = false;
-
-            try {
-              queue1 = queue1.popFront();
-            } catch (NoSuchElementException e) {
-              noSuchElementException1 = true;
-            }
-            try {
-              queue2.remove();
-            } catch (NoSuchElementException e) {
-              noSuchElementException2 = true;
-            }
-
-            assertEquals(noSuchElementException1, noSuchElementException2);
-            return queue1;
-          }
-
-          @Override
-          public String toString() {
-            return "popFront";
-          }
-        };
-      }
+    System.out.println(queue);
+    for (int i = 0; i < 100; ++i) {
+      assertEquals(i, queue.size());
+      queue = queue.pushBack(String.valueOf(i));
+      System.out.println(queue);
     }
 
-    throw new IllegalStateException("Bad operation index: " + rnd);
-  }
-
-  protected interface Op {
-    PQueue<String> run(PQueue<String> queue1, LinkedList<String> queue2);
+    for (int i = 0; i < 100; ++i) {
+      assertEquals(100 - i, queue.size());
+      queue = queue.popFront();
+    }
   }
 }
