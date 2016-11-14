@@ -2,30 +2,29 @@ package com.mikea.concrete.impl;
 
 import com.google.common.collect.Iterables;
 import com.mikea.concrete.PQueue;
-
-import static com.mikea.concrete.impl.Stack.newStack;
+import com.mikea.concrete.PStack;
 
 /**
  * Real-time queue operation as described in "Real Time Queue Operations in Pure LISP" by
  * Hood, Robert T. & Melville, Robert C.
  */
 public class RealtimeQueue<T> implements PQueue<T> {
-  private final Stack<T> head;
-  private final Stack<T> tail;
+  private final PStack<T> head;
+  private final PStack<T> tail;
 
-  private final Stack<T> tailReverseFrom;
-  private final Stack<T> tailReverseTo;
-  private final Stack<T> headReverseFrom;
-  private final Stack<T> headReverseTo;
+  private final PStack<T> tailReverseFrom;
+  private final PStack<T> tailReverseTo;
+  private final PStack<T> headReverseFrom;
+  private final PStack<T> headReverseTo;
   private final long headCopied;
 
-  private RealtimeQueue(Stack<T> head, Stack<T> tail, Stack<T> tailReverseFrom,
-                        Stack<T> tailReverseTo, Stack<T> headReverseFrom, Stack<T> headReverseTo, long headCopied) {
+  private RealtimeQueue(PStack<T> head, PStack<T> tail, PStack<T> tailReverseFrom,
+                        PStack<T> tailReverseTo, PStack<T> headReverseFrom, PStack<T> headReverseTo, long headCopied) {
     if (tail.size() > head.size()) {
       assertEmptyReverseStacks(headReverseFrom, headReverseTo, tailReverseFrom, tailReverseTo);
       if (tail.size() == 1) {
         this.head = tail;
-        this.tail = Stack.newStack();
+        this.tail = PStack.newStack();
         this.tailReverseFrom = null;
         this.tailReverseTo = null;
         this.headReverseFrom = null;
@@ -35,9 +34,9 @@ public class RealtimeQueue<T> implements PQueue<T> {
         this.tail = Stack.newStack();
 
         this.tailReverseFrom = tail;
-        this.tailReverseTo = Stack.newStack();
+        this.tailReverseTo = PStack.newStack();
         this.headReverseFrom = head;
-        this.headReverseTo = Stack.newStack();
+        this.headReverseTo = PStack.newStack();
       }
     } else {
       this.head = head;
@@ -72,9 +71,9 @@ public class RealtimeQueue<T> implements PQueue<T> {
     return head.peekFront();
   }
 
-  private static <T> RealtimeQueue<T> newQueue(Stack<T> head, Stack<T> tail,
-                                               Stack<T> tailReverseFrom, Stack<T> tailReverseTo, Stack<T> headReverseFrom,
-                                               Stack<T> headReverseTo, long headCopied) {
+  private static <T> RealtimeQueue<T> newQueue(PStack<T> head, PStack<T> tail,
+                                               PStack<T> tailReverseFrom, PStack<T> tailReverseTo, PStack<T> headReverseFrom,
+                                               PStack<T> headReverseTo, long headCopied) {
 
     RealtimeQueue<T> result = new RealtimeQueue<>(head, tail, tailReverseFrom,
         tailReverseTo, headReverseFrom, headReverseTo, headCopied);
@@ -95,8 +94,8 @@ public class RealtimeQueue<T> implements PQueue<T> {
     return this.tailReverseFrom != null && this.tailReverseTo != null && this.headReverseFrom != null && this.headReverseTo != null;
   }
 
-  private static <T> RealtimeQueue<T> step(Stack<T> head, Stack<T> tail, Stack<T> tailReverseFrom,
-                                           Stack<T> tailReverseTo, Stack<T> headReverseFrom, Stack<T> headReverseTo, long headCopied) {
+  private static <T> RealtimeQueue<T> step(PStack<T> head, PStack<T> tail, PStack<T> tailReverseFrom,
+                                           PStack<T> tailReverseTo, PStack<T> headReverseFrom, PStack<T> headReverseTo, long headCopied) {
     if (tailReverseFrom == null || tailReverseTo == null || headReverseFrom == null || headReverseTo == null) {
       throw new IllegalStateException("Internal error: invariant failure.");
     }
@@ -148,8 +147,8 @@ public class RealtimeQueue<T> implements PQueue<T> {
     return result;
   }
 
-  private static <T> void assertEmptyReverseStacks(Stack<T> headReverseFrom, Stack<T> headReverseTo,
-                                                   Stack<T> tailReverseFrom, Stack<T> tailReverseTo) {
+  private static <T> void assertEmptyReverseStacks(PStack<T> headReverseFrom, PStack<T> headReverseTo,
+                                                   PStack<T> tailReverseFrom, PStack<T> tailReverseTo) {
     if (tailReverseFrom != null || tailReverseTo != null || headReverseFrom != null || headReverseTo
         != null) {
       throw new IllegalStateException("Internal error: invariant failure.");

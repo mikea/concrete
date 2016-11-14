@@ -39,7 +39,7 @@ public class Stack<T> implements PStack<T>, Iterable<T> {
   }
 
   @Override
-  public Stack<T> clear() {
+  public PStack<T> clear() {
     return newStack();
   }
 
@@ -74,38 +74,11 @@ public class Stack<T> implements PStack<T>, Iterable<T> {
   }
 
   @Override
-  public Iterator<T> iterator() {
-    return new Iterator<T>() {
-      Stack<T> pointer = Stack.this;
-
-      @Override
-      public boolean hasNext() {
-        return pointer.size != 0;
-      }
-
-      @Override
-      public T next() {
-        if (!hasNext()) {
-          throw new NoSuchElementException();
-        }
-        T value = pointer.value;
-        pointer = pointer.next;
-        return value;
-      }
-
-      @Override
-      public void remove() {
-        throw new UnsupportedOperationException("remove is not implemented.");
-      }
-    };
-  }
-
-  @Override
   public String toString() {
     return Iterables.toString(this);
   }
 
-  public static <T> Stack<T> newStack() {
+  public static <T> PStack<T> newStack() {
     return new Stack<>();
   }
 }
