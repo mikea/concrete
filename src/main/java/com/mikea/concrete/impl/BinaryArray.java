@@ -96,34 +96,38 @@ public class BinaryArray<T> implements PArray<T> {
     return lookup(nodes, index);
   }
 
-  // todo: norecurse
-  private T lookup(PStack<Node<T>> ptr, int index) {
-    Node<T> node = ptr.peekFront();
-    if (node == null) {
-      return lookup(ptr.popFront(), index);
-    } else {
-      int sz = node.size();
-      if (index < sz) {
-        return lookupTree(node, index);
+  private static <T> T lookup(PStack<Node<T>> ptr, int index) {
+    while (true) {
+      Node<T> node = ptr.peekFront();
+
+      if (node == null) {
+        ptr = ptr.popFront();
       } else {
-        return lookup(ptr.popFront(), index - sz);
+        int sz = node.size();
+        if (index < sz) {
+          return lookupTree(node, index);
+        } else {
+          ptr = ptr.popFront();
+          index -= sz;
+        }
       }
     }
   }
 
-  // todo: norecurse
-  private T lookupTree(Node<T> node, int index) {
-    if (node instanceof Leaf) {
-      assert index == 0;
-      return ((Leaf<T>) node).t;
-    } else {
+  private static <T> T lookupTree(Node<T> node, int index) {
+    while (node instanceof Tree) {
       Tree<T> tree = (Tree<T>) node;
+
       if (index < tree.size() / 2) {
-        return lookupTree(tree.left, index);
+        node = tree.left;
       } else {
-        return lookupTree(tree.right, index - tree.size() / 2);
+        node = tree.right;
+        index -= tree.size() / 2;
       }
     }
+
+    assert index == 0;
+    return ((Leaf<T>) node).t;
   }
 
   @Override
@@ -136,7 +140,7 @@ public class BinaryArray<T> implements PArray<T> {
   }
 
   // todo: norecurse
-  private PStack<Node<T>> update(PStack<Node<T>> nodes, int index, T t) {
+  private static <T> PStack<Node<T>> update(PStack<Node<T>> nodes, int index, T t) {
     Node<T> node = nodes.peekFront();
     PStack<Node<T>> tail = nodes.popFront();
 
@@ -153,9 +157,7 @@ public class BinaryArray<T> implements PArray<T> {
   }
 
   // todo: norecurse
-  private Node<T> updateTree(Node<T> node, int index, T t) {
-    assert index >= 0;
-
+  private static <T> Node<T> updateTree(Node<T> node, int index, T t) {
     if (node instanceof Leaf) {
       assert index == 0 : String.valueOf(index);
       return new Leaf<>(t);

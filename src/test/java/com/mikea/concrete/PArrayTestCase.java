@@ -80,7 +80,6 @@ public abstract class PArrayTestCase extends PStackTestCase {
 
     for (int i = 0; i < array.size(); ++i) {
       array = array.set(i, String.valueOf(i + 1000));
-      assertEquals(String.valueOf(i + 1000), array.get(i));
     }
 
     assertEquals("[1000, 1001, 1002, 1003, 1004, 1005]", array.toString());
