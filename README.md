@@ -9,6 +9,8 @@ Implementation follows "Purely Functional Data Structures" by Chris Okasaki unle
 
 ## PStack
 
+O(1) operations: pushFront, peekFront, popFront, size, isEmpty.
+O(N) operations: reverse.
 
 ```java
 PStack<String> stack = PStack.newStack();
@@ -18,7 +20,7 @@ stack = stack.popFront();
 assertTrue(stack.isEmpty());
 ```
 
-PStack runtime performanse is always better than ArrayList and LinkedList (ignoring GC overhead): 
+PStack runtime performance is always better than ArrayList and LinkedList (ignoring GC overhead): 
 [benchmark report](https://microbenchmarks.appspot.com/runs/eba86353-07d3-4db3-87e5-875ec5d373eb#r:scenario.benchmarkSpec.parameters.implementation&c:scenario.benchmarkSpec.parameters.test,scenario.benchmarkSpec.parameters.length),
 [code](https://github.com/mikea/concrete/blob/master/src/test/java/com/mikea/concrete/benchmarks/StackBenchmark.java).
 
@@ -30,7 +32,9 @@ PStack<String> stack2 = PStack.newStack("c", "d");
 assertEquals("[a, b, c, d]", stack1.append(stack2).toString());
 ```
 
-## Queue
+## PQueue
+
+O(1) operations: pushBack, popFront, peekFront, size, isEmpty
 
 Queue with [amortized](https://en.wikipedia.org/wiki/Amortized_analysis) O(1) performance:
  
@@ -58,7 +62,9 @@ queue = queue.popFront();
 assertEquals("[c]", queue.toString());
 ```
 
-## Deque
+## PDeque
+
+O(1) operations: pushFront, popFront, peekFront, pushBack, peekBack, peekFront, size, isEmpty.
 
 Deque with [amortized](https://en.wikipedia.org/wiki/Amortized_analysis) O(1) performance:
 
@@ -69,3 +75,22 @@ deque = deque.pushFront("a");
 deque = deque.popBack();
 assertEquals("[a, b]", deque.toString());
 ```
+
+## PArray
+
+Random-access array.
+
+O(log N) operations: pushFront, popFront, peekFront, set, get.
+
+```java
+PArray<String> array = PArray.newBinaryArray();
+array = array.pushFrontAll("a", "b", "c");
+assertEquals("b", array.get(1));
+array = array.set(1, "X");
+assertEquals("[a, X, c]", array.toString());
+```
+
+### Base Classes
+
+- PIterable with O(1) operations: popFront, peekFront, isEmpty.
+- PCollection with O(1) operations: isEmpty, clear, size.

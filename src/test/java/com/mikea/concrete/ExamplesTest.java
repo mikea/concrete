@@ -57,4 +57,13 @@ public class ExamplesTest {
         deque = deque.popBack();
         assertEquals("[a, b]", deque.toString());
     }
+
+    @Test
+    public void binaryArray() {
+        PArray<String> array = PArray.newBinaryArray();
+        array = array.pushFrontAll("a", "b", "c");
+        assertEquals("b", array.get(1));
+        array = array.set(1, "X");
+        assertEquals("[a, X, c]", array.toString());
+    }
 }
