@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public abstract class StackTestCase {
+public abstract class PStackTestCase {
   protected abstract PStack<String> newStack();
 
   @Test

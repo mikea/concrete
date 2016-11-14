@@ -1,5 +1,8 @@
-package com.mikea.concrete;
+package com.mikea.concrete.impl;
 
+import com.mikea.concrete.PDeque;
+import com.mikea.concrete.PQueue;
+import com.mikea.concrete.PQueueTestCase;
 import com.mikea.concrete.impl.AmortizedDeque;
 
 import java.util.LinkedList;
@@ -8,7 +11,7 @@ import java.util.NoSuchElementException;
 import static com.mikea.concrete.impl.AmortizedDeque.newAmortizedDeque;
 import static org.junit.Assert.assertEquals;
 
-public class AmortizedDequeTest extends QueueTestCase<AmortizedDeque<String>>  {
+public class AmortizedDequeTest extends PQueueTestCase<AmortizedDeque<String>> {
   @Override
   protected AmortizedDeque<String> newQueue() {
     return newDeque();

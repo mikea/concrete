@@ -1,5 +1,6 @@
-package com.mikea.concrete;
+package com.mikea.concrete.impl;
 
+import com.mikea.concrete.PStack;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

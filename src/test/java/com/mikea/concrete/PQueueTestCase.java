@@ -10,13 +10,13 @@ import java.util.Random;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.Assert.*;
 
-public abstract class QueueTestCase<Q extends PQueue<String>> {
+public abstract class PQueueTestCase<Q extends PQueue<String>> {
 
   protected abstract Q newQueue();
 
   @Test
   public void testEmptyQueue() throws Exception {
-    Q queue = newQueue();
+    PQueue<String> queue = newQueue();
     assertTrue(queue.isEmpty());
     assertEquals(0, queue.size());
   }
