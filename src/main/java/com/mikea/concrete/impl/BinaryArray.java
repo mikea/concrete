@@ -199,10 +199,15 @@ public class BinaryArray<T> implements PArray<T> {
       this.size = size;
     }
 
-    // todo: kill
-    public abstract T leftMostLeaf();
+    final T leftMostLeaf() {
+      Node<T> ptr = this;
+      while (ptr.size() > 1) {
+        ptr = ((Tree<T>) ptr).left;
+      }
+      return ((Leaf<T>) ptr).t;
+    }
 
-    public final int size() {
+    final int size() {
       return size;
     }
   }
@@ -219,11 +224,6 @@ public class BinaryArray<T> implements PArray<T> {
     public String toString() {
       return String.valueOf(t);
     }
-
-    @Override
-    public T leftMostLeaf() {
-      return t;
-    }
   }
 
   private static class Tree<T> extends Node<T> {
@@ -239,11 +239,6 @@ public class BinaryArray<T> implements PArray<T> {
     @Override
     public String toString() {
       return String.format("(%s, %s)", left, right);
-    }
-
-    @Override
-    public T leftMostLeaf() {
-      return left.leftMostLeaf();
     }
   }
 }
