@@ -21,7 +21,8 @@ public class RealtimeQueue<T> implements PQueue<T> {
   private RealtimeQueue(PStack<T> head, PStack<T> tail, PStack<T> tailReverseFrom,
                         PStack<T> tailReverseTo, PStack<T> headReverseFrom, PStack<T> headReverseTo, long headCopied) {
     if (tail.size() > head.size()) {
-      assertEmptyReverseStacks(headReverseFrom, headReverseTo, tailReverseFrom, tailReverseTo);
+      assert tailReverseFrom == null && tailReverseTo == null
+          && headReverseFrom == null && headReverseTo == null : "Internal error: invariant failure.";
       if (tail.size() == 1) {
         this.head = tail;
         this.tail = PStack.newStack();
@@ -96,9 +97,7 @@ public class RealtimeQueue<T> implements PQueue<T> {
 
   private static <T> RealtimeQueue<T> step(PStack<T> head, PStack<T> tail, PStack<T> tailReverseFrom,
                                            PStack<T> tailReverseTo, PStack<T> headReverseFrom, PStack<T> headReverseTo, long headCopied) {
-    if (tailReverseFrom == null || tailReverseTo == null || headReverseFrom == null || headReverseTo == null) {
-      throw new IllegalStateException("Internal error: invariant failure.");
-    }
+    assert !(tailReverseFrom == null || tailReverseTo == null || headReverseFrom == null || headReverseTo == null) : "Internal error: invariant failure.";
 
     if (!tailReverseFrom.isEmpty()) {
       tailReverseTo = tailReverseTo.pushFront(tailReverseFrom.peekFront());
@@ -140,19 +139,7 @@ public class RealtimeQueue<T> implements PQueue<T> {
 
   @Override
   public boolean isEmpty() {
-    boolean result = head.isEmpty() && tail.isEmpty();
-    if (result) {
-      assertEmptyReverseStacks(headReverseFrom, headReverseTo, tailReverseFrom, tailReverseTo);
-    }
-    return result;
-  }
-
-  private static <T> void assertEmptyReverseStacks(PStack<T> headReverseFrom, PStack<T> headReverseTo,
-                                                   PStack<T> tailReverseFrom, PStack<T> tailReverseTo) {
-    if (tailReverseFrom != null || tailReverseTo != null || headReverseFrom != null || headReverseTo
-        != null) {
-      throw new IllegalStateException("Internal error: invariant failure.");
-    }
+    return head.isEmpty() && tail.isEmpty();
   }
 
   @Override
@@ -166,7 +153,9 @@ public class RealtimeQueue<T> implements PQueue<T> {
   }
 
   @Override
-  public RealtimeQueue<T> clear() { return new RealtimeQueue<>(); }
+  public RealtimeQueue<T> clear() {
+    return new RealtimeQueue<>();
+  }
 
   public static <T> RealtimeQueue<T> newRealtimeQueue() {
     return new RealtimeQueue<>();

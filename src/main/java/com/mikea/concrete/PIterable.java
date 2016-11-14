@@ -5,9 +5,7 @@ import java.util.NoSuchElementException;
 
 public interface PIterable<T> extends Iterable<T> {
   boolean isEmpty();
-
   T peekFront();
-
   PIterable<T> popFront() throws NoSuchElementException;
 
   @Override
@@ -35,21 +33,5 @@ public interface PIterable<T> extends Iterable<T> {
         throw new UnsupportedOperationException("remove is not implemented.");
       }
     };
-  }
-
-  /**
-   * Peeks the back of the stack. O(|N|).
-   */
-  default T peekBack() {
-    PIterable<T> ptr = this;
-    while (!ptr.isEmpty()) {
-      PIterable<T> next = ptr.popFront();
-      if (next.isEmpty()) {
-        return ptr.peekFront();
-      }
-      ptr = next;
-    }
-
-    return peekFront();
   }
 }

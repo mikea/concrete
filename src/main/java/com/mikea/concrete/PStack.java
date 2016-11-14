@@ -22,6 +22,7 @@ public interface PStack<T> extends PCollection<T>, PIterable<T> {
     return stack.pushFrontAll(items);
   }
 
+  @SuppressWarnings("unchecked")
   default PStack<T> pushFrontAll(T... items) {
     PStack<T> stack = this;
     for (int i = items.length - 1; i >= 0; i--) {
@@ -51,12 +52,5 @@ public interface PStack<T> extends PCollection<T>, PIterable<T> {
       stack = stack.popFront();
     }
     return result;
-  }
-
-  /**
-   * Pops one element from the back of the stack. O(|N|).
-   */
-  default PStack<T> popBack() {
-    return reverse().popFront().reverse();
   }
 }

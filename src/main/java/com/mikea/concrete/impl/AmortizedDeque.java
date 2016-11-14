@@ -43,18 +43,27 @@ public class AmortizedDeque<T> implements PDeque<T> {
     } else if (head.isEmpty()) {
       throw new NoSuchElementException();
     } else {
-      return new AmortizedDeque<>(head.popBack(), tail);
+      return new AmortizedDeque<>(head.reverse().popFront().reverse(), tail);
     }
   }
 
   @Override
   public T peekBack() {
     if (tail.isEmpty()) {
-      return head.peekBack();
+      return peekBack(head);
     } else {
       return tail.peekFront();
     }
   }
+
+  private static <T> T peekBack(PStack<T> stack) {
+    while (stack.size() > 1) {
+      stack = stack.popFront();
+    }
+
+    return stack.peekFront();
+  }
+
 
   public static <T> AmortizedDeque<T> newAmortizedDeque() {
     return new AmortizedDeque<>();

@@ -17,7 +17,9 @@ apply plugin: 'com.github.ben-manes.versions'
 // gradle pitest
 apply plugin: "info.solidsoft.pitest"
 
+//noinspection GroovyUnusedAssignment
 sourceCompatibility = 1.8
+//noinspection GroovyUnusedAssignment
 targetCompatibility = 1.8
 
 repositories {
@@ -35,4 +37,8 @@ pitest {
     targetTests = [ '~^.*(?<!RandomizedTest)$' ]
     outputFormats = ['XML', 'HTML']
 //    verbose = true
+}
+
+tasks.withType(Test) {
+    enableAssertions = true
 }
