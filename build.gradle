@@ -34,5 +34,5 @@ pitest {
     targetClasses = ['com.mikea.concrete.*']
     targetTests = [ '~^.*(?<!RandomizedTest)$' ]
     outputFormats = ['XML', 'HTML']
-    verbose = true
+//    verbose = true
 }
