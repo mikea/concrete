@@ -3,10 +3,10 @@ package com.mikea.concrete;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-class ArrayListDeque implements PDeque<String> {
-  private final ArrayList<String> data;
+class ArrayListDeque<T> implements PDeque<T> {
+  private final ArrayList<T> data;
 
-  private ArrayListDeque(ArrayList<String> data) {
+  private ArrayListDeque(ArrayList<T> data) {
     this.data = data;
   }
 
@@ -15,7 +15,7 @@ class ArrayListDeque implements PDeque<String> {
   }
 
   @Override
-  public String peekFront() {
+  public T peekFront() {
     if (isEmpty()) {
       return null;
     }
@@ -23,34 +23,34 @@ class ArrayListDeque implements PDeque<String> {
   }
 
   @Override
-  public PDeque<String> popFront() {
+  public PDeque<T> popFront() {
     if (isEmpty()) {
       throw new NoSuchElementException();
     }
-    ArrayList<String> newData = new ArrayList<>(data);
+    ArrayList<T> newData = new ArrayList<>(data);
     newData.remove(0);
-    return new ArrayListDeque(newData);
+    return new ArrayListDeque<>(newData);
   }
 
   @Override
-  public PDeque<String> pushFront(String value) {
-    ArrayList<String> newData = new ArrayList<>(data);
+  public PDeque<T> pushFront(T value) {
+    ArrayList<T> newData = new ArrayList<>(data);
     newData.add(0, value);
-    return new ArrayListDeque(newData);
+    return new ArrayListDeque<>(newData);
   }
 
   @Override
-  public PDeque<String> popBack() {
+  public PDeque<T> popBack() {
     if (isEmpty()) {
       throw new NoSuchElementException();
     }
-    ArrayList<String> newData = new ArrayList<>(data);
+    ArrayList<T> newData = new ArrayList<>(data);
     newData.remove(data.size() - 1);
-    return new ArrayListDeque(newData);
+    return new ArrayListDeque<>(newData);
   }
 
   @Override
-  public String peekBack() {
+  public T peekBack() {
     if (isEmpty()) {
       return null;
     }
@@ -58,15 +58,15 @@ class ArrayListDeque implements PDeque<String> {
   }
 
   @Override
-  public PDeque<String> pushBack(String value) {
-    ArrayList<String> newData = new ArrayList<>(data);
+  public PDeque<T> pushBack(T value) {
+    ArrayList<T> newData = new ArrayList<>(data);
     newData.add(value);
-    return new ArrayListDeque(newData);
+    return new ArrayListDeque<>(newData);
   }
 
   @Override
-  public PDeque<String> clear() {
-    return new ArrayListDeque();
+  public PDeque<T> clear() {
+    return new ArrayListDeque<>();
   }
 
   @Override

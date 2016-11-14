@@ -1,12 +1,11 @@
 package com.mikea.concrete.impl;
 
 import com.mikea.concrete.PArray;
-import com.mikea.concrete.PStack;
-import com.mikea.concrete.PStackTestCase;
+import com.mikea.concrete.PArrayTestCase;
 
-public class BinaryArrayTest extends PStackTestCase {
+public class BinaryArrayTest extends PArrayTestCase {
   @Override
-  protected PStack<String> newStack() {
+  protected PArray<String> newArray() {
     return PArray.newBinaryArray();
   }
 }

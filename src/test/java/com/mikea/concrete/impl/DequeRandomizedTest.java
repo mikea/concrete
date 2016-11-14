@@ -5,7 +5,7 @@ import com.mikea.concrete.PDequeRandomizedTestCase;
 
 public class DequeRandomizedTest extends PDequeRandomizedTestCase {
   @Override
-  protected PDeque<String> newDeque() {
+  protected PDeque<Integer> newDeque() {
     return PDeque.newAmortizedDeque();
   }
 }

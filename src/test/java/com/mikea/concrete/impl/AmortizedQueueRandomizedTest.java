@@ -5,7 +5,7 @@ import com.mikea.concrete.PQueueRandomizedTestCase;
 
 public class AmortizedQueueRandomizedTest extends PQueueRandomizedTestCase {
   @Override
-  protected PQueue<String> newQueue() {
+  protected PQueue<Integer> newQueue() {
     return PQueue.newAmortizedQueue();
   }
 }

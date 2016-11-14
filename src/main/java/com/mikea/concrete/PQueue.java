@@ -15,11 +15,11 @@ public interface PQueue<T> extends PCollection<T>, PIterable<T> {
   PQueue<T> pushBack(T value);
 
 
-  static PQueue<String> newAmortizedQueue() {
+  static <T> PQueue<T> newAmortizedQueue() {
     return AmortizedQueue.newAmortizedQueue();
   }
 
-  static PQueue<String> newRealtimeQueue() {
+  static <T> PQueue<T> newRealtimeQueue() {
     return RealtimeQueue.newRealtimeQueue();
   }
 

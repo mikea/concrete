@@ -5,7 +5,7 @@ import com.mikea.concrete.PStackRandomizedTestCase;
 
 public class StackRandomizedTest extends PStackRandomizedTestCase {
   @Override
-  protected PStack<String> newStack() {
+  protected PStack<Integer> newStack() {
     return PStack.newStack();
   }
 }

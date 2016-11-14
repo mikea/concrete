@@ -5,8 +5,8 @@ import com.google.common.collect.Iterables;
 
 import static org.junit.Assert.assertEquals;
 
-public abstract class PStackRandomizedTestCase extends RandomizedTestCase<PStack<String>> {
-  protected abstract PStack<String> newStack();
+public abstract class PStackRandomizedTestCase extends RandomizedTestCase<PStack<Integer>> {
+  protected abstract PStack<Integer> newStack();
 
   public PStackRandomizedTestCase() {
     super(
@@ -16,17 +16,17 @@ public abstract class PStackRandomizedTestCase extends RandomizedTestCase<PStack
   }
 
   @Override
-  protected PStack<String> newTestContainer() {
+  protected PStack<Integer> newTestContainer() {
     return newStack();
   }
 
   @Override
-  protected PStack<String> newGoldenContainer() {
-    return new ArrayListStack();
+  protected PStack<Integer> newGoldenContainer() {
+    return new ArrayListStack<>();
   }
 
   @Override
-  protected void assertContainersAreEqual(PStack<String> golden, PStack<String> test) {
+  protected void assertContainersAreEqual(PStack<Integer> golden, PStack<Integer> test) {
     assertEquals(golden.size(), test.size());
     assertEquals(golden.toString(), test.toString());
     assertEquals(Iterables.toString(golden), Iterables.toString(test));

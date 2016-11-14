@@ -4,8 +4,8 @@ import com.google.common.collect.Iterables;
 
 import static org.junit.Assert.assertEquals;
 
-public abstract class PQueueRandomizedTestCase extends RandomizedTestCase<PQueue<String>> {
-  protected abstract PQueue<String> newQueue();
+public abstract class PQueueRandomizedTestCase extends RandomizedTestCase<PQueue<Integer>> {
+  protected abstract PQueue<Integer> newQueue();
 
   public PQueueRandomizedTestCase() {
     super(
@@ -15,17 +15,17 @@ public abstract class PQueueRandomizedTestCase extends RandomizedTestCase<PQueue
   }
 
   @Override
-  protected PQueue<String> newTestContainer() {
+  protected PQueue<Integer> newTestContainer() {
     return newQueue();
   }
 
   @Override
-  protected PQueue<String> newGoldenContainer() {
-    return new ArrayListQueue();
+  protected PQueue<Integer> newGoldenContainer() {
+    return new ArrayListQueue<>();
   }
 
   @Override
-  protected void assertContainersAreEqual(PQueue<String> golden, PQueue<String> test) {
+  protected void assertContainersAreEqual(PQueue<Integer> golden, PQueue<Integer> test) {
     assertEquals(golden.isEmpty(), test.isEmpty());
     assertEquals(golden.size(), test.size());
     assertEquals(golden.toString(), test.toString());

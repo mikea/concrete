@@ -5,7 +5,7 @@ import com.mikea.concrete.PArrayRandomizedTestCase;
 
 public class BinaryArrayRandomizedTest extends PArrayRandomizedTestCase {
   @Override
-  protected PArray<String> newArray() {
+  protected PArray<Integer> newArray() {
     return PArray.newBinaryArray();
   }
 }

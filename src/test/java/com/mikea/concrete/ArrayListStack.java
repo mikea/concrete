@@ -3,10 +3,10 @@ package com.mikea.concrete;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-class ArrayListStack implements PStack<String> {
-  private final ArrayList<String> data;
+class ArrayListStack<T> implements PStack<T> {
+  private final ArrayList<T> data;
 
-  private ArrayListStack(ArrayList<String> data) {
+  private ArrayListStack(ArrayList<T> data) {
     this.data = data;
   }
 
@@ -15,7 +15,7 @@ class ArrayListStack implements PStack<String> {
   }
 
   @Override
-  public String peekFront() {
+  public T peekFront() {
     if (isEmpty()) {
       return null;
     }
@@ -23,25 +23,25 @@ class ArrayListStack implements PStack<String> {
   }
 
   @Override
-  public PStack<String> popFront() {
+  public PStack<T> popFront() {
     if (isEmpty()) {
       throw new NoSuchElementException();
     }
-    ArrayList<String> newData = new ArrayList<>(data);
+    ArrayList<T> newData = new ArrayList<>(data);
     newData.remove(0);
-    return new ArrayListStack(newData);
+    return new ArrayListStack<>(newData);
   }
 
   @Override
-  public PStack<String> pushFront(String value) {
-    ArrayList<String> newData = new ArrayList<>(data);
+  public PStack<T> pushFront(T value) {
+    ArrayList<T> newData = new ArrayList<>(data);
     newData.add(0, value);
-    return new ArrayListStack(newData);
+    return new ArrayListStack<>(newData);
   }
 
   @Override
-  public PStack<String> clear() {
-    return new ArrayListStack();
+  public PStack<T> clear() {
+    return new ArrayListStack<>();
   }
 
   @Override

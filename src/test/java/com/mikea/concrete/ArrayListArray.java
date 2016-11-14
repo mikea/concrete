@@ -3,10 +3,10 @@ package com.mikea.concrete;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-class ArrayListArray implements PArray<String> {
-  private final ArrayList<String> data;
+class ArrayListArray<T> implements PArray<T> {
+  private final ArrayList<T> data;
 
-  private ArrayListArray(ArrayList<String> data) {
+  private ArrayListArray(ArrayList<T> data) {
     this.data = data;
   }
 
@@ -15,7 +15,7 @@ class ArrayListArray implements PArray<String> {
   }
 
   @Override
-  public String peekFront() {
+  public T peekFront() {
     if (isEmpty()) {
       return null;
     }
@@ -23,25 +23,25 @@ class ArrayListArray implements PArray<String> {
   }
 
   @Override
-  public PArray<String> popFront() {
+  public PArray<T> popFront() {
     if (isEmpty()) {
       throw new NoSuchElementException();
     }
-    ArrayList<String> newData = new ArrayList<>(data);
+    ArrayList<T> newData = new ArrayList<>(data);
     newData.remove(0);
-    return new ArrayListArray(newData);
+    return new ArrayListArray<>(newData);
   }
 
   @Override
-  public PArray<String> pushFront(String value) {
-    ArrayList<String> newData = new ArrayList<>(data);
+  public PArray<T> pushFront(T value) {
+    ArrayList<T> newData = new ArrayList<>(data);
     newData.add(0, value);
-    return new ArrayListArray(newData);
+    return new ArrayListArray<>(newData);
   }
 
   @Override
-  public PArray<String> clear() {
-    return new ArrayListArray();
+  public PArray<T> clear() {
+    return new ArrayListArray<>();
   }
 
   @Override
@@ -60,14 +60,21 @@ class ArrayListArray implements PArray<String> {
   }
 
   @Override
-  public String get(int index) {
+  public T get(int index) {
+    if (index >= size() || index < 0) {
+      return null;
+    }
     return data.get(index);
   }
 
   @Override
-  public PArray<String> set(int index, String s) {
-    ArrayList<String> newData = new ArrayList<>(data);
+  public PArray<T> set(int index, T s) {
+    if (index >= size() || index < 0) {
+      throw new IndexOutOfBoundsException();
+    }
+
+    ArrayList<T> newData = new ArrayList<>(data);
     newData.set(index, s);
-    return new ArrayListArray(newData);
+    return new ArrayListArray<>(newData);
   }
 }

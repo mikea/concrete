@@ -15,9 +15,20 @@ public interface PArray<T> extends PStack<T> {
 
   T get(int index);
 
-  PArray<T> set(int index, T t) throws NoSuchElementException;
+  PArray<T> set(int index, T t) throws IndexOutOfBoundsException;
 
-  static PArray<String> newBinaryArray() {
+  @SuppressWarnings("unchecked")
+  default PArray<T> pushFrontAll(T... items) {
+    PArray<T> array = this;
+    for (int i = items.length - 1; i >= 0; i--) {
+      T item = items[i];
+      array = array.pushFront(item);
+    }
+    return array;
+  }
+
+
+  static <T> PArray<T> newBinaryArray() {
     return BinaryArray.newBinaryArray();
   }
 }

@@ -4,8 +4,8 @@ import com.google.common.collect.Iterables;
 
 import static org.junit.Assert.assertEquals;
 
-public abstract class PDequeRandomizedTestCase extends RandomizedTestCase<PDeque<String>> {
-  protected abstract PDeque<String> newDeque();
+public abstract class PDequeRandomizedTestCase extends RandomizedTestCase<PDeque<Integer>> {
+  protected abstract PDeque<Integer> newDeque();
 
   public PDequeRandomizedTestCase() {
     super(
@@ -17,17 +17,17 @@ public abstract class PDequeRandomizedTestCase extends RandomizedTestCase<PDeque
   }
 
   @Override
-  protected PDeque<String> newTestContainer() {
+  protected PDeque<Integer> newTestContainer() {
     return newDeque();
   }
 
   @Override
-  protected PDeque<String> newGoldenContainer() {
-    return new ArrayListDeque();
+  protected PDeque<Integer> newGoldenContainer() {
+    return new ArrayListDeque<>();
   }
 
   @Override
-  protected void assertContainersAreEqual(PDeque<String> golden, PDeque<String> test) {
+  protected void assertContainersAreEqual(PDeque<Integer> golden, PDeque<Integer> test) {
     assertEquals(golden.size(), test.size());
     assertEquals(golden.toString(), test.toString());
     assertEquals(Iterables.toString(golden), Iterables.toString(test));

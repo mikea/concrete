@@ -5,7 +5,7 @@ import com.mikea.concrete.PQueueRandomizedTestCase;
 
 public class RealtimeQueueRandomizedTest extends PQueueRandomizedTestCase {
   @Override
-  protected PQueue<String> newQueue() {
+  protected PQueue<Integer> newQueue() {
     return PQueue.newRealtimeQueue();
   }
 }

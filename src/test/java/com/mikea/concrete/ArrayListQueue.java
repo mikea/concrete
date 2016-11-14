@@ -3,10 +3,10 @@ package com.mikea.concrete;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-class ArrayListQueue implements PQueue<String> {
-  private final ArrayList<String> data;
+class ArrayListQueue<T> implements PQueue<T> {
+  private final ArrayList<T> data;
 
-  private ArrayListQueue(ArrayList<String> data) {
+  private ArrayListQueue(ArrayList<T> data) {
     this.data = data;
   }
 
@@ -15,7 +15,7 @@ class ArrayListQueue implements PQueue<String> {
   }
 
   @Override
-  public String peekFront() {
+  public T peekFront() {
     if (isEmpty()) {
       return null;
     }
@@ -23,25 +23,25 @@ class ArrayListQueue implements PQueue<String> {
   }
 
   @Override
-  public PQueue<String> popFront() {
+  public PQueue<T> popFront() {
     if (isEmpty()) {
       throw new NoSuchElementException();
     }
-    ArrayList<String> newData = new ArrayList<>(data);
+    ArrayList<T> newData = new ArrayList<>(data);
     newData.remove(0);
-    return new ArrayListQueue(newData);
+    return new ArrayListQueue<>(newData);
   }
 
   @Override
-  public PQueue<String> pushBack(String value) {
-    ArrayList<String> newData = new ArrayList<>(data);
+  public PQueue<T> pushBack(T value) {
+    ArrayList<T> newData = new ArrayList<>(data);
     newData.add(value);
-    return new ArrayListQueue(newData);
+    return new ArrayListQueue<>(newData);
   }
 
   @Override
-  public PQueue<String> clear() {
-    return new ArrayListQueue();
+  public PQueue<T> clear() {
+    return new ArrayListQueue<>();
   }
 
   @Override
